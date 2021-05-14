@@ -1,0 +1,7 @@
+newsfeed/Globals.java
+ newsfeed.Globals
+ newsfeed.ShowsMenu
+newsfeed/MainApplication.java
+ newsfeed.MainApplication
+newsfeed/NewsFeedApplication.java
+ newsfeed.NewsFeedApplication
