@@ -45,36 +45,43 @@ public class MainApplication implements ShowsMenu {
                     System.out.println("Invalid input!");
             }
         } else {
-            if(option == 1)
-                Authentication.login();
-            else
-                System.out.println("Invalid input! Try again...");
+            switch (option) {
+                case 1:
+                    Authentication.login();
+                    break;
+                case 2:
+                    Authentication.register();
+                    break;
+                default:
+                    System.out.println("Invalid input! Try again...");
+                    break;
+            }
         }
     }
 
     @Override
     public void showMenu() {
-        String mainMenu = "\n\n-------------------- Main Menu --------------------\n" +
-                "1. Today's Highlights\n" +
-                "2. Top Headlines\n" +
-                "3. View news sources\n" +
-                "4. How to use the interface?\n\n";
-        StringBuilder userMenu = new StringBuilder(mainMenu);
-        userMenu.append("user\n");
-        if(Authentication.isLoggedIn())
-            userMenu.append("1. View / Manage Subscriptions\n" +
-                    "2. View Bookmarks\n" +
-                    "3. Logout\n");
-        else
-            userMenu.append("1. Log-in\n");
-        mainMenu = userMenu.append("\n0. Exit\n").toString();
 
-        BufferedReader in = Globals.input;
         try {
             String option;
             do {
+                String mainMenu = "\n\n-------------------- Main Menu --------------------\n" +
+                        "1. Today's Highlights\n" +
+                        "2. Top Headlines\n" +
+                        "3. View news sources\n" +
+                        "4. How to use the interface?\n\n";
+                StringBuilder userMenu = new StringBuilder(mainMenu);
+                userMenu.append("user\n");
+                if(Authentication.isLoggedIn())
+                    userMenu.append("1. View / Manage Subscriptions\n" +
+                            "2. View Bookmarks\n" +
+                            "3. Logout\n");
+                else
+                    userMenu.append("1. Log-in\n" +
+                            "2. Register\n");
+                mainMenu = userMenu.append("\n0. Exit\n").toString();
                 System.out.println(mainMenu + "Your option: ");
-                option = in.readLine();
+                option = Globals.input.readLine();
                 performAction(option);
             } while(!option.equals("0"));
         } catch (IOException e) {
