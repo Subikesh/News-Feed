@@ -29,6 +29,14 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public void viewSubscriptions() {
+        System.out.println("Here the sources set is printed");
+    }
+
+    public void viewBookmarks() {
+        System.out.println("Here the bookmarks are displayed");
+    }
+
     @Override
     public String toString() {
         return "User{" +

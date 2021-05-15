@@ -7,6 +7,51 @@ import users.*;
 
 public class MainApplication implements ShowsMenu {
 
+    public void generalActions(int option) {
+        switch (option) {
+            case 1:
+                System.out.println("Here is today's highlights");
+                break;
+            case 2:
+                System.out.println("Here is top headlines");
+                break;
+            case 3:
+                System.out.println("Showing Sources!");
+                break;
+            case 4:
+                System.out.println("Redirecting to the Help markdown.");
+                break;
+            case 0:
+                System.out.println("Thank you for using the application");
+                break;
+            default:
+                System.out.println("Invalid Input! Try again...");
+        }
+    }
+
+    public void userActions(int option) {
+        if (Authentication.isLoggedIn()) {
+            switch (option) {
+                case 1:
+                    Authentication.currUser.viewSubscriptions();
+                    break;
+                case 2:
+                    Authentication.currUser.viewBookmarks();
+                    break;
+                case 3:
+                    Authentication.logout();
+                    break;
+                default:
+                    System.out.println("Invalid input!");
+            }
+        } else {
+            if(option == 1)
+                Authentication.login();
+            else
+                System.out.println("Invalid input! Try again...");
+        }
+    }
+
     @Override
     public void showMenu() {
         String mainMenu = "\n\n-------------------- Main Menu --------------------\n" +
@@ -39,22 +84,10 @@ public class MainApplication implements ShowsMenu {
 
     @Override
     public void performAction(@NotNull String option) {
-        switch (option) {
-            case "1":
-                System.out.println("Here is today's highlights");
-                break;
-            case "2":
-                System.out.println("Here is top headlines");
-                break;
-            case "3":
-                System.out.println("Showing Sources!");
-                break;
-            case "4":
-                System.out.println("Redirecting to the Help markdown.");
-                break;
-            default:
-                System.out.println("Thank you for using the application");
-                System.exit(0);
-        }
+        String[] action = option.split("\\s+");
+        if(action[0].equalsIgnoreCase("user"))
+            userActions(Integer.parseInt(action[1]));
+        else
+            generalActions(Integer.parseInt(option));
     }
 }

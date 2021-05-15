@@ -5,8 +5,8 @@ import newsfeed.Globals;
 import java.io.*;
 
 /**
- * This class contains the methods related to authenticating user
- * If currUser is equal to guestUser, then user is not logged in
+ * This class contains static methods and session variables related to authenticating user
+ * If currUser is equal to guestUser, then user is not authenticated.
  */
 public class Authentication {
     public static final User guestUser = new User("_guest_", "_guest_");
@@ -25,5 +25,13 @@ public class Authentication {
 
     public static boolean isLoggedIn() {
         return !Authentication.currUser.equals(guestUser);
+    }
+
+    public static void login() {
+        System.out.println("The user is now logged in");
+    }
+
+    public static void logout() {
+        System.out.println("The user is now logged out");
     }
 }

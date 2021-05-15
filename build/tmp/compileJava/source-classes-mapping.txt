@@ -1,6 +1,11 @@
+newsfeed/ShowsMenu.java
+ newsfeed.ShowsMenu
 newsfeed/Globals.java
  newsfeed.Globals
- newsfeed.ShowsMenu
+users/User.java
+ users.User
+users/Authentication.java
+ users.Authentication
 newsfeed/MainApplication.java
  newsfeed.MainApplication
 newsfeed/NewsFeedApplication.java
