@@ -15,18 +15,35 @@ public class User implements Serializable {
     private String password;
 
     public User() {
-        try {
-            System.out.println("Enter username :");
-            username = Globals.input.readLine();
-            System.out.println("Enter password :");
-            password = Globals.input.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        username = null;
+        password = null;
     }
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+    
+    public void getInputs() {
+        try {
+            setUsername();
+            setPassword();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUsername() throws IOException {
+        System.out.println("Enter username :");
+        username = Globals.input.readLine();
+    }
+
+    public void setPassword() throws IOException {
+        System.out.println("Enter password :");
+        password = Globals.input.readLine();
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void viewSubscriptions() {

@@ -41,9 +41,10 @@ public class Authentication {
 
             // Write new user to file
             ob.writeObject(user);
+            usersCount++;
             // Log-in newly created user
             login(user);
-            System.out.println(user.getUsername() + " is logged in.");
+            System.out.println("'" + user.getUsername() + "' is logged in.");
 
             ob.close();
         } catch (IOException ex) {
@@ -51,16 +52,25 @@ public class Authentication {
         }
     }
 
-    public static boolean isLoggedIn() {
-        return !Authentication.currUser.equals(guestUser);
+    public static boolean login() {
+        User user = new User();
+        user.getInputs();
+        if (!isRegistered(user)) {
+            System.out.println("User credentials incorrect.");
+            return false;
+        } else {
+            login(user);
+            System.out.println("User logged in successfully.");
+            return true;
+        }
     }
 
-    public static void login() {
-        System.out.println("The user is now logged in");
+    public static void login(User user) {
+        currUser = user;
     }
 
     public static void logout() {
-        System.out.println("The user is now logged out");
+        currUser = guestUser;
     }
 
     /**
