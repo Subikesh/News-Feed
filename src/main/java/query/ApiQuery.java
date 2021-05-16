@@ -35,6 +35,11 @@ public interface ApiQuery {
     void filterQuery(String name, String value);
 
     /**
+     * Updates the query string with the filters applied
+     */
+    void updateQuery();
+
+    /**
      * Makes an API call for the filters made till then and stores the JSON in result
      */
     void makeAPICall();

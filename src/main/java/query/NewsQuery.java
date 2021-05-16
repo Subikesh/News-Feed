@@ -6,7 +6,8 @@ import java.util.*;
 
 public class NewsQuery implements ApiQuery {
     private String query;
-    public Map<String, String> filterMap;
+    private final String BASE_QUERY;
+    private Map<String, String> filterMap;
 
     // Contains all the possible filter values for the API
     public final static Set<String> FILTER_KEYS = new HashSet<>(
@@ -16,10 +17,24 @@ public class NewsQuery implements ApiQuery {
 
     public NewsQuery() {
         filterMap = new HashMap<>();
-        query = domainUrl + "everything?";
+        BASE_QUERY = domainUrl + "everything?";
 
         // Default filter is language: english
         filterQuery("language", "en");
+    }
+
+    public Map<String, String> getFilters() {
+        return filterMap;
+    }
+
+    @Override
+    public void updateQuery() {
+        StringBuilder queryBuilder = new StringBuilder(BASE_QUERY);
+        for(String key: filterMap.keySet()) {
+            queryBuilder.append(key).append("=").append(filterMap.get(key)).append("&");
+        }
+        queryBuilder.append("apiKey="+ API_KEY);
+        query = queryBuilder.toString();
     }
 
     @Override
