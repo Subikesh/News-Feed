@@ -9,13 +9,13 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class TopNewsQuery implements ApiQuery {
+public class NewsQuery implements ApiQuery {
     private String query;
     private NewsEndpoint endpoint;
     private Map<String, String> filterMap;
     private JsonObject jsonResult;
 
-    public TopNewsQuery() {
+    public NewsQuery() {
         filterMap = new HashMap<>();
 
         // Default Endpoint will be top-headlines
@@ -23,6 +23,15 @@ public class TopNewsQuery implements ApiQuery {
 
         // Default filter is language: english
         filterQuery("language", "en");
+    }
+
+    public NewsQuery(NewsEndpoint endpoint) {
+        this();
+        this.endpoint = endpoint;
+        if(endpoint.equals(NewsEndpoint.EVERYTHING)) {
+            filterQuery("q", "a");
+            filterQuery("sortBy", "publishedAt");
+        }
     }
 
     public Map<String, String> getFilters() {
@@ -99,7 +108,8 @@ public class TopNewsQuery implements ApiQuery {
     }
 
     public static void main(String[] args) {
-        ApiQuery newQuery = new TopNewsQuery();
+        ApiQuery newQuery = new NewsQuery(NewsEndpoint.EVERYTHING);
+        newQuery.filterQuery("from", "2021-05-01");
         JsonArray result = newQuery.getResultJson();
         System.out.println(result);
     }
