@@ -1,3 +1,9 @@
+# Private files
+/src/Ignored/
+
+# Data files
+/*.txt
+
 # Compiled class file
 *.class
 

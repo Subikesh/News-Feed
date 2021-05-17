@@ -2,20 +2,20 @@ package query;
 
 import article.Article;
 import org.jetbrains.annotations.NotNull;
+import com.google.gson.*;
 
 import java.util.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.google.gson.*;
 
-public class NewsQuery implements ApiQuery {
+public class TopNewsQuery implements ApiQuery {
     private String query;
     private NewsEndpoint endpoint;
     private Map<String, String> filterMap;
     private JsonObject jsonResult;
 
-    public NewsQuery() {
+    public TopNewsQuery() {
         filterMap = new HashMap<>();
 
         // Default Endpoint will be top-headlines
@@ -29,49 +29,28 @@ public class NewsQuery implements ApiQuery {
         return filterMap;
     }
 
-    public NewsEndpoint checkEndPoint() {
-        if (NewsEndpoint.TOP_HEADLINES.parameters.containsAll(filterMap.keySet()))
-            return NewsEndpoint.TOP_HEADLINES;
-        else if(NewsEndpoint.EVERYTHING.parameters.containsAll(filterMap.keySet()))
-            return NewsEndpoint.EVERYTHING;
-        else
-            return null;
-    }
-
-    public void updateEndPoint() throws RuntimeException{
-        NewsEndpoint newEndPoint = checkEndPoint();
-        if(newEndPoint == null) {
-            throw new RuntimeException("The parameters are mixed up. Either give parameters of 'top-headlines' " +
-                    "or the parameters of 'everything' endpoint");
-        } else {
-            endpoint = newEndPoint;
+    @Override
+    public void filterQuery(@NotNull String name, @NotNull String value) throws RuntimeException{
+        // Validating name and value
+        if(!endpoint.parameters.contains(name)) {
+            throw new RuntimeException("Invalid parameter for " + endpoint.value + " endpoint.");
         }
+        // validates the given value for the corresponding name
+        if (!value.matches(REGEX_MAP.get(name))) {
+            throw new RuntimeException("The given value for '" + name +"' is not valid!");
+        }
+        filterMap.put(name, value);
     }
 
     @Override
     public void updateQuery() {
         StringBuilder queryBuilder = new StringBuilder(domainUrl);
-        updateEndPoint();
         queryBuilder.append(endpoint.value).append("?");
         for(String key: filterMap.keySet()) {
             queryBuilder.append(key).append("=").append(filterMap.get(key)).append("&");
         }
         queryBuilder.append("apiKey="+ API_KEY);
         query = queryBuilder.toString();
-    }
-
-    @Override
-    public void filterQuery(@NotNull String name, @NotNull String value) throws RuntimeException{
-        // Validating name and value
-        // check if string is lowercase letters
-        if(!endpoint.parameters.contains(name)) {
-            updateEndPoint();
-        }
-        // validates the given value for the corresponding name
-        if (!value.matches(REGEX_MAP.get(name))) {
-            throw new RuntimeException("Invalid query value!");
-        }
-        filterMap.put(name, value);
     }
 
     @Override
@@ -99,9 +78,6 @@ public class NewsQuery implements ApiQuery {
 
             // Gets the jsonObject from JSON string notation
             jsonResult = new Gson().fromJson(output, JsonObject.class);
-            if (jsonResult.get("status").getAsString().equals("error")) {
-                throw new RuntimeException("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
-            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -109,11 +85,22 @@ public class NewsQuery implements ApiQuery {
 
     @Override
     public <T extends Article> List<T> getResult() {
+        makeAPICall();
         return null;
     }
 
+    @Override
+    public JsonArray getResultJson() throws RuntimeException {
+        makeAPICall();
+        if (jsonResult.get("status").getAsString().equals("error")) {
+            throw new RuntimeException("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
+        }
+        return jsonResult.get("articles").getAsJsonArray();
+    }
+
     public static void main(String[] args) {
-        ApiQuery newQuery = new NewsQuery();
-        newQuery.makeAPICall();
+        ApiQuery newQuery = new TopNewsQuery();
+        JsonArray result = newQuery.getResultJson();
+        System.out.println(result);
     }
 }

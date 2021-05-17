@@ -16,9 +16,12 @@ public class MainApplication implements ShowsMenu {
                 System.out.println("Here is top headlines");
                 break;
             case 3:
-                System.out.println("Showing Sources!");
+                System.out.println("Showing news with more filters");
                 break;
             case 4:
+                System.out.println("Showing Sources!");
+                break;
+            case 5:
                 System.out.println("Redirecting to the Help markdown.");
                 break;
             case 0:
@@ -43,6 +46,7 @@ public class MainApplication implements ShowsMenu {
                     break;
                 default:
                     System.out.println("Invalid input!");
+                    break;
             }
         } else {
             switch (option) {
@@ -68,8 +72,9 @@ public class MainApplication implements ShowsMenu {
                 String mainMenu = "\n\n-------------------- Main Menu --------------------\n" +
                         "1. Today's Highlights\n" +
                         "2. Top Headlines\n" +
-                        "3. View news sources\n" +
-                        "4. How to use the interface?\n\n";
+                        "3. More filter options\n" +
+                        "4. View news sources\n" +
+                        "5. How to use the interface?\n\n";
                 StringBuilder userMenu = new StringBuilder(mainMenu);
                 userMenu.append("user\n");
                 if(Authentication.isLoggedIn())

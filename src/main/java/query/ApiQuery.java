@@ -2,6 +2,7 @@ package query;
 
 import java.util.*;
 import article.*;
+import com.google.gson.JsonArray;
 
 /**
  * Interface contains the methods for creating, editing, and making API calls to newsAPI
@@ -16,7 +17,9 @@ public interface ApiQuery {
         put("q", "^[a-z\\-\\.\\(\\)\\+\\\"]+$");
         put("qlnTitle", "^[a-z\\-\\.\\(\\)\\+\\\"]+$");
         put("sources", "^[a-z\\-]+$");
-        put("domains", "^[a-z\\.]+$");
+        put("category", "^[a-z]+$");
+        put("country", "[a-z]{2}");
+        put("domains", "^[a-z\\.\\,]+$");
         put("excludeDomains", "^[a-z\\.]+$");
         put("from", "^\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}){2})?$");
         put("to", "^\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}){2})?$");
@@ -50,4 +53,10 @@ public interface ApiQuery {
      * @return a news or source object for the class in which it is implemented
      */
     <T extends Article> List<T> getResult();
+
+    /**
+     * Get the result of the filters in JSON array format
+     * @return a JSON Array object of news results
+     */
+    JsonArray getResultJson();
 }
