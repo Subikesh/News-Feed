@@ -1,12 +1,23 @@
 newsfeed/ShowsMenu.java
  newsfeed.ShowsMenu
+article/News.java
+ article.News
+newsfeed/MainApplication.java
+ newsfeed.MainApplication
+article/Article.java
+ article.Article
 newsfeed/Globals.java
  newsfeed.Globals
 users/User.java
  users.User
 users/Authentication.java
  users.Authentication
-newsfeed/MainApplication.java
- newsfeed.MainApplication
 newsfeed/NewsFeedApplication.java
  newsfeed.NewsFeedApplication
+query/ApiQuery.java
+ query.ApiQuery
+ query.ApiQuery$1
+query/NewsEndpoint.java
+ query.NewsEndpoint
+query/NewsQuery.java
+ query.NewsQuery
