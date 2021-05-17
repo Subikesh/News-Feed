@@ -4,6 +4,10 @@ import article.Article;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import com.google.gson.*;
 
 public class NewsQuery implements ApiQuery {
     private String query;
@@ -72,11 +76,44 @@ public class NewsQuery implements ApiQuery {
 
     @Override
     public void makeAPICall() {
+        updateQuery();
+        try {
+            URL url = new URL(query);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            System.out.println(query);
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
+            StringBuilder jsonString = new StringBuilder();
+            String output;
+            while ((output = br.readLine()) != null) {
+                jsonString.append(output);
+            }
+            conn.disconnect();
+            output = jsonString.toString();
 
+            // Gets the jsonObject from JSON string notation
+            jsonResult = new Gson().fromJson(output, JsonObject.class);
+            if (jsonResult.get("status").getAsString().equals("error")) {
+                throw new RuntimeException("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public <T extends Article> List<T> getResult() {
         return null;
+    }
+
+    public static void main(String[] args) {
+        ApiQuery newQuery = new NewsQuery();
+        newQuery.makeAPICall();
     }
 }
