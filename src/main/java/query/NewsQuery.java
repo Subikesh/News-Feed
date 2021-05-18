@@ -13,7 +13,7 @@ public class NewsQuery implements ApiQuery {
     private String query;
     private NewsEndpoint endpoint;
     private Map<String, String> filterMap;
-    private JsonObject jsonResult;
+    protected JsonObject jsonResult;
 
     public NewsQuery() {
         filterMap = new HashMap<>();
@@ -70,7 +70,6 @@ public class NewsQuery implements ApiQuery {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
-            System.out.println(query);
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : "
                         + conn.getResponseCode());
@@ -107,10 +106,4 @@ public class NewsQuery implements ApiQuery {
         return jsonResult.get("articles").getAsJsonArray();
     }
 
-    public static void main(String[] args) {
-        ApiQuery newQuery = new NewsQuery(NewsEndpoint.EVERYTHING);
-        newQuery.filterQuery("from", "2021-05-01");
-        JsonArray result = newQuery.getResultJson();
-        System.out.println(result);
-    }
 }

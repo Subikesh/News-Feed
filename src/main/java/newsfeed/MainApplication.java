@@ -45,7 +45,7 @@ public class MainApplication implements ShowsMenu {
                     Authentication.logout();
                     break;
                 default:
-                    System.out.println("Invalid input!");
+                    System.out.println("Invalid input! Try again...");
                     break;
             }
         } else {
@@ -97,7 +97,9 @@ public class MainApplication implements ShowsMenu {
     @Override
     public void performAction(@NotNull String option) {
         String[] action = option.split("\\s+");
-        if(action[0].equalsIgnoreCase("user"))
+        if(action.length == 1)
+            generalActions(Integer.parseInt(option));
+        else if(action[0].equalsIgnoreCase("user"))
             userActions(Integer.parseInt(action[1]));
         else
             generalActions(Integer.parseInt(option));
