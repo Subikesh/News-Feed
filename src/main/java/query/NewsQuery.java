@@ -9,6 +9,9 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Contains all the utility functions for making news based API calls
+ */
 public class NewsQuery implements ApiQuery {
     private String query;
     private NewsEndpoint endpoint;
@@ -25,6 +28,11 @@ public class NewsQuery implements ApiQuery {
         filterQuery("language", "en");
     }
 
+    /**
+     * Assignes corresponding endpoint to the class' field
+     * @param endpoint NewsEndpoint.EVERYTHING is passed to get advanced filtering
+     *                 NewsEndpoint.TOP_HEADLINES is passed to get normal news filters (default)
+     */
     public NewsQuery(NewsEndpoint endpoint) {
         this();
         this.endpoint = endpoint;
@@ -68,7 +76,7 @@ public class NewsQuery implements ApiQuery {
         try {
             System.out.println("Making API request...");
             URL url = new URL(query);
-            System.out.println(query);
+//            System.out.println(query);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -107,5 +115,4 @@ public class NewsQuery implements ApiQuery {
         }
         return jsonResult.get("articles").getAsJsonArray();
     }
-
 }
