@@ -1,5 +1,6 @@
 package query;
 
+import article.News;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -153,8 +154,8 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
     private void newsActions(int option) {
         if(option > 0 && option <= resultArray.size()) {
             JsonObject newsObject = resultArray.get(option - 1).getAsJsonObject();
-            System.out.println("Title: " + newsObject.get("title") +
-                    "\nAuthor: " + newsObject.get("author"));
+            News newsObj = new News(newsObject);
+            newsObj.showMenu();
         } else {
             System.out.println("Invalid input! Try again...");
         }

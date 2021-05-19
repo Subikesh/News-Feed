@@ -4,7 +4,10 @@ import com.google.gson.JsonObject;
 import newsfeed.Globals;
 import users.Authentication;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Class displays details of a single news object from a JsonObject
@@ -12,7 +15,7 @@ import java.io.IOException;
 public class News implements Article {
     private String author;
     private String title;
-    private String sourceId;
+    private String sourceName;
     private String description;
     private String publishedAt;
     private String content;
@@ -30,34 +33,26 @@ public class News implements Article {
      */
     @Override
     public void copyFromJson(JsonObject obj) {
-        author = obj.get("author").getAsString();
+        if(obj.get("author") != null)
+            author = obj.get("author").getAsString();
+        else
+            author = null;
         title = obj.get("title").getAsString();
-        sourceId = obj.get("sourceId").getAsJsonObject().get("id").getAsString();
+        sourceName = obj.get("source").getAsJsonObject().get("name").getAsString();
         description = obj.get("description").getAsString();
         publishedAt = obj.get("publishedAt").getAsString();
         content = obj.get("content").getAsString();
         url = obj.get("url").getAsString();
     }
 
-    /**
-     * Opens the url of the news article in a browser
-     */
-    @Override
-    public void gotoWebsite() {
-        if(url != null)
-            System.out.println("Opening the url in browser");
-    }
-
-
     @Override
     public void showDetails() {
         String details = "\nTitle: " + title;
-        if(author.equals("null")) {
+        if(author != null) {
             details += "\nAuthor: " + author;
         }
-        if(sourceId.equals("null"))
-            details += "\nSource id: " + sourceId;
-        details += "\nDescription: " + description +
+        details += "\nSource name: " + sourceName +
+                "\nDescription: " + description +
                 "\nPublished time: " + publishedAt +
                 "\nContent: " + content +
                 "\nURL: " + url;
@@ -66,12 +61,12 @@ public class News implements Article {
 
     @Override
     public void showMenu() {
-        showDetails();
         String option;
         try {
             do {
-                String menu = "Options: \n" +
-                        "1. View full article(Open website)\n";
+                showDetails();
+                String menu = "\nOptions: \n" +
+                        "1. View full article (Open website)\n";
                 if (Authentication.isLoggedIn())
                     menu += "2. Make article offline\n" +
                             "3. Bookmark news\n";
@@ -97,14 +92,16 @@ public class News implements Article {
                     gotoWebsite();
                     break;
                 case 2:
-                    if(Authentication.isLoggedIn()) {
+                    if(Authentication.isLoggedIn())
                         System.out.println("implement make offline");
-                    }
+                    else
+                        System.out.println("Invalid input. Try again...");
                     break;
                 case 3:
-                    if(Authentication.isLoggedIn()) {
+                    if(Authentication.isLoggedIn())
                         System.out.println("implement add bookmark");
-                    }
+                    else
+                        System.out.println("Invalid input. Try again...");
                     break;
                 case 0:
                     break;
@@ -114,6 +111,24 @@ public class News implements Article {
             }
         } catch (NumberFormatException exception) {
             System.out.println("Invalid input. Try again...");
+        }
+    }
+
+    /**
+     * Opens the url of the news article in a browser
+     */
+    @Override
+    public void gotoWebsite() {
+        if(url != null) {
+            System.out.println("Opening the url in browser...");
+            try {
+                Desktop desk = Desktop.getDesktop();
+                desk.browse(new URI(url));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                System.out.println("Invalid URL provided.");
+            }
         }
     }
 }
