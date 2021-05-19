@@ -3,6 +3,8 @@ package newsfeed;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+
+import query.TopNewsQuery;
 import users.*;
 
 public class MainApplication implements ShowsMenu {
@@ -10,19 +12,16 @@ public class MainApplication implements ShowsMenu {
     public void generalActions(int option) {
         switch (option) {
             case 1:
-                System.out.println("Here is today's highlights");
+                new TopNewsQuery().showMenu();
                 break;
             case 2:
-                System.out.println("Here is top headlines");
-                break;
-            case 3:
                 System.out.println("Showing news with more filters");
                 break;
-            case 4:
+            case 3:
                 System.out.println("Showing Sources!");
                 break;
-            case 5:
-                System.out.println("Redirecting to the Help markdown.");
+            case 4:
+                System.out.println("Redirecting to the Help markdown file.");
                 break;
             case 0:
                 System.out.println("Thank you for using the application");
@@ -70,11 +69,10 @@ public class MainApplication implements ShowsMenu {
             String option;
             do {
                 String mainMenu = "\n\n-------------------- Main Menu --------------------\n" +
-                        "1. Today's Highlights\n" +
-                        "2. Top Headlines\n" +
-                        "3. More filter options\n" +
-                        "4. View news sources\n" +
-                        "5. How to use the interface?\n\n";
+                        "1. Top Headlines\n" +
+                        "2. Advanced filter options\n" +
+                        "3. View news sources\n" +
+                        "4. How to use the interface?\n\n";
                 StringBuilder userMenu = new StringBuilder(mainMenu);
                 userMenu.append("user\n");
                 if(Authentication.isLoggedIn())
@@ -96,12 +94,16 @@ public class MainApplication implements ShowsMenu {
 
     @Override
     public void performAction(@NotNull String option) {
-        String[] action = option.split("\\s+");
-        if(action.length == 1)
-            generalActions(Integer.parseInt(option));
-        else if(action[0].equalsIgnoreCase("user"))
-            userActions(Integer.parseInt(action[1]));
-        else
-            generalActions(Integer.parseInt(option));
+        try {
+            String[] action = option.split("\\s+");
+            if(action.length == 1)
+                generalActions(Integer.parseInt(option));
+            else if(action[0].equalsIgnoreCase("user"))
+                userActions(Integer.parseInt(action[1]));
+            else
+                generalActions(Integer.parseInt(option));
+        } catch (NumberFormatException e) {
+            System.out.println("Illegal input. Try again...");
+        }
     }
 }

@@ -153,9 +153,4 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
             System.out.println("Invalid input! Try again...");
         }
     }
-
-    public static void main(String[] args) {
-        TopNewsQuery news = new TopNewsQuery();
-        news.showMenu();
-    }
 }

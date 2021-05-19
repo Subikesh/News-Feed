@@ -66,6 +66,7 @@ public class NewsQuery implements ApiQuery {
     public void makeAPICall() {
         updateQuery();
         try {
+            System.out.println("Making API request...");
             URL url = new URL(query);
             System.out.println(query);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
