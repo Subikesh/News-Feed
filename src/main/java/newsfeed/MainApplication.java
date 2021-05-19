@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 
+import query.AllNewsQuery;
 import query.TopNewsQuery;
 import users.*;
 
@@ -15,7 +16,7 @@ public class MainApplication implements ShowsMenu {
                 new TopNewsQuery().showMenu();
                 break;
             case 2:
-                System.out.println("Showing news with more filters");
+                new AllNewsQuery().showMenu();
                 break;
             case 3:
                 System.out.println("Showing Sources!");
