@@ -11,7 +11,7 @@ import java.io.IOException;
 public class TopNewsQuery extends NewsQuery implements ShowsMenu {
 
     // Managing the pages of API response object
-    int pageNo = 0;
+    int pageNo = 1;
     final int PAGE_SIZE = 10;
     int maxPages = 0;
 
@@ -25,7 +25,13 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
             do {
                 String mainMenu = "\n\n-------------------- Top Headlines --------------------\n" +
                         "News: (command: news)\n";
-                mainMenu += getNews();
+                String newsString = getNewsString();
+                mainMenu += "Filters applied: " + getFilters();
+                if(newsString.isEmpty())
+                    mainMenu += "-- No news found for this filters. Generalize filters to view more news. --\n";
+                else
+                    mainMenu += "\t\t\tPage no: " + pageNo +"/" + maxPages + "\n";
+                    mainMenu += newsString;
                 mainMenu += "\nFilters: (command: filter)\n" +
                         "1. Country\n" +
                         "2. Category\n" +
@@ -33,7 +39,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         "4. Search\n";
                 if(pageNo != maxPages)
                     mainMenu += "5. Next Page\n";
-                if(pageNo != 0)
+                if(pageNo != 1)
                     mainMenu += "6. Previous Page\n";
                 mainMenu +=  "\n0. Go to main menu\n" +
                         "Your Option: ";
@@ -49,14 +55,18 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
     @Override
     public void performAction(String option) {
         String[] action = option.split("\\s+");
-        if(action[0].equals("0")) {
-            return;
-        } else if(action[0].equalsIgnoreCase("filter")) {
-            filterActions(Integer.parseInt(action[1]));
-        } else if(action[0].equalsIgnoreCase("news")) {
-            newsActions(Integer.parseInt(action[1]));
-        } else {
-            newsActions(Integer.parseInt(option));
+        try {
+            if(action[0].equals("0")) {
+                return;
+            } else if(action[0].equalsIgnoreCase("filter")) {
+                filterActions(Integer.parseInt(action[1]));
+            } else if(action[0].equalsIgnoreCase("news")) {
+                newsActions(Integer.parseInt(action[1]));
+            } else {
+                newsActions(Integer.parseInt(option));
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Illegal input. Try again...");
         }
     }
 
@@ -65,7 +75,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
      * Gets the headlines of all the news and returns as a string format
      * @return String which has numbers list of news headlines returned by API
      */
-    private String getNews() {
+    private String getNewsString() {
         filterQuery("page", String.valueOf(pageNo));
         filterQuery("pageSize", String.valueOf(PAGE_SIZE));
         StringBuilder newsString = new StringBuilder();
