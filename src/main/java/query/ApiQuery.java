@@ -24,7 +24,7 @@ public interface ApiQuery {
         put("from", "^\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}){2})?$");
         put("to", "^\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}){2})?$");
         put("language", "[a-z]{2}");
-        put("sortBy", "^[a-zA-Z]+$");
+        put("sortBy", "^(relevancy)|(popularity)|(publishedAt)$");
         put("pageSize", "\\d+");
         put("page", "\\d+");
         put("lowerCase", "^[a-z]+$");

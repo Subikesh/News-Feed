@@ -37,9 +37,9 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         "2. Category\n" +
                         "3. Sources\n" +
                         "4. Search\n";
-                if(pageNo != maxPages)
+                if(pageNo < maxPages)
                     mainMenu += "5. Next Page\n";
-                if(pageNo != 1)
+                if(pageNo > 1)
                     mainMenu += "6. Previous Page\n";
                 mainMenu +=  "\n0. Go to main menu\n" +
                         "Your Option: ";
@@ -56,9 +56,8 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
     public void performAction(String option) {
         String[] action = option.split("\\s+");
         try {
-            if(action[0].equals("0")) {
-                return;
-            } else if(action[0].equalsIgnoreCase("filter")) {
+            if(action[0].equals("0"));
+            else if(action[0].equalsIgnoreCase("filter")) {
                 filterActions(Integer.parseInt(action[1]));
             } else if(action[0].equalsIgnoreCase("news")) {
                 newsActions(Integer.parseInt(action[1]));
@@ -125,11 +124,16 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                     filterQuery("q", input);
                     break;
                 case 5:
-                    pageNo++;
-                    System.out.println("Page incremented");
+                    if(pageNo < maxPages) {
+                        pageNo++;
+                        System.out.println("Page incremented");
+                    }
                     break;
                 case 6:
-                    pageNo--;
+                    if(pageNo > 1) {
+                        pageNo--;
+                        System.out.println("Page decremented");
+                    }
                     break;
                 default:
                     System.out.println("Invalid input! Try again...");
@@ -137,6 +141,8 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (RuntimeException ex) {
+            System.out.println("The value entered is not valid input.");
         }
     }
 

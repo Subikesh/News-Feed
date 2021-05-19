@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public enum NewsEndpoint {
     EVERYTHING("everything", new HashSet<>(
-            Arrays.asList("q", "qlnTitle", "sources", "domains", "excludeDomains", "from", "to", "language",
+            Arrays.asList("q", "qInTitle", "sources", "domains", "excludeDomains", "from", "to", "language",
                     "sortBy", "pageSize", "page")
     )),
     TOP_HEADLINES("top-headlines", new HashSet<>(
