@@ -4,6 +4,8 @@ import article.Article;
 import org.jetbrains.annotations.NotNull;
 import com.google.gson.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -64,7 +66,8 @@ public class NewsQuery implements ApiQuery {
         if (!value.matches(REGEX_MAP.get(name))) {
             throw new RuntimeException("The given value for '" + name +"' is not valid!");
         }
-        filterMap.put(name, value);
+
+        filterMap.put(name, URLEncoder.encode(value, StandardCharsets.UTF_8));
     }
 
     @Override

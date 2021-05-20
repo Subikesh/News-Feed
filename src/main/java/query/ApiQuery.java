@@ -14,13 +14,13 @@ public interface ApiQuery {
     // Contains all the key value pairs for regex validation
     HashMap<String, String> REGEX_MAP = new HashMap<>()
     {{
-        put("q", "^[a-zA-Z\\-\\.\\(\\)\\+\\\"]+$");
-        put("qlnTitle", "^[a-zA-Z\\-\\.\\(\\)\\+\\\"]+$");
+        put("q", "^[^(=&/)]+$");
+        put("qlnTitle", "^[^(=&/)]+$");
         put("sources", "^[a-z\\-]+$");
         put("category", "^[a-z]+$");
         put("country", "[a-z]{2}");
-        put("domains", "^[a-z\\.\\,]+$");
-        put("excludeDomains", "^[a-z\\.]+$");
+        put("domains", "^[a-z\\.\\,\\-]+$");
+        put("excludeDomains", "^[a-z\\.\\,\\-]+$");
         put("from", "^\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}){2})?$");
         put("to", "^\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}){2})?$");
         put("language", "[a-z]{2}");

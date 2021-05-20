@@ -157,7 +157,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                     break;
                 case 4:
                     System.out.println("Enter the search query: \n" +
-                            "(Note: The search query should be url-encoded string.)");
+                            "(Note: The search query should not contain = or &. Enclose with \" for exact match)\n");
                     System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
                     if(input.equals("0"))
