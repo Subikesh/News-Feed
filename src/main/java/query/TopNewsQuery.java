@@ -29,7 +29,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                 String newsString = getNewsString();
                 mainMenu += "Filters applied: " + getFilters();
                 if(newsString.isEmpty())
-                    mainMenu += "-- No news found for this filters. Generalize filters to view more news. --\n";
+                    mainMenu += "\n-- No news found for this filters. Generalize filters to view more news. --\n";
                 else
                     mainMenu += "\t\t\tPage no: " + pageNo +"/" + maxPages + "\n";
                     mainMenu += newsString;
@@ -37,11 +37,12 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         "1. Country\n" +
                         "2. Category\n" +
                         "3. Sources\n" +
-                        "4. Search\n";
+                        "4. Search\n" +
+                        "5. Clear filters\n";
                 if(pageNo < maxPages)
-                    mainMenu += "5. Next Page\n";
+                    mainMenu += "6. Next Page\n";
                 if(pageNo > 1)
-                    mainMenu += "6. Previous Page\n";
+                    mainMenu += "7. Previous Page\n";
                 mainMenu +=  "\n0. Go to main menu\n" +
                         "Your Option: ";
                 System.out.println(mainMenu);
@@ -99,38 +100,57 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
             switch (option) {
                 case 1:
                     System.out.println("Possible country code options are: ae, ar, at, au, be, bg, br, ca, ch, cu,\n" +
-                            "cz, de, eg, fr, gb, gr, hk, hu, id, ie, il, in, it, jp, kr, lt, lv, ma, mx, my, ng, nl,\n" +
-                            "nz, ph, pl, pt, ro, rs, ru, sa, se, sg, si, sk, th, tr, tw, ua, us, ve, za, cn, co, no. \n" +
+                            "cz, cn, co, de, eg, fr, gb, gr, hk, hu, id, ie, il, in, it, jp, kr, lt, lv, ma, mx, my, ng, nl,\n" +
+                            "no, nz, ph, pl, pt, ro, rs, ru, sa, se, sg, si, sk, th, tr, tw, ua, us, ve, za.\n" +
                             "\nEnter the country code: ");
+                    System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
-                    filterQuery("country", input);
+                    if(input.equals("0"))
+                        removeFilter("country");
+                    else
+                        filterQuery("country", input);
                     break;
                 case 2:
                     System.out.println("Category options are: business, entertainment, general, health, science, \n" +
                             "sports, technology.\n" +
                             "Enter the category to filter: ");
+                    System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
-                    filterQuery("category", input);
+                    if(input.equals("0"))
+                        removeFilter("category");
+                    else
+                        filterQuery("category", input);
                     break;
                 case 3:
                     System.out.println("Enter the source' id:\n" +
                             "(Complete list of sources can from view sources in main page)");
+                    System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
-                    filterQuery("sources", input);
+                    if(input.equals("0"))
+                        removeFilter("sources");
+                    else
+                        filterQuery("sources", input);
                     break;
                 case 4:
                     System.out.println("Enter the search query: \n" +
                             "(Note: The search query should be url-encoded string.)");
+                    System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
-                    filterQuery("q", input);
+                    if(input.equals("0"))
+                        removeFilter("q");
+                    else
+                        filterQuery("q", input);
                     break;
                 case 5:
+                    clearFilters();
+                    break;
+                case 6:
                     if(pageNo < maxPages) {
                         pageNo++;
                         System.out.println("Page incremented");
                     }
                     break;
-                case 6:
+                case 7:
                     if(pageNo > 1) {
                         pageNo--;
                         System.out.println("Page decremented");

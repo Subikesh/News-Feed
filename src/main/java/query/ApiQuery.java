@@ -38,6 +38,17 @@ public interface ApiQuery {
     void filterQuery(String name, String value);
 
     /**
+     * Clears all filters and assign default filters
+     */
+    void clearFilters();
+
+    /**
+     * Removes the filter from filterMap or assigns it to default filter
+     * @param name parameter name
+     */
+    void removeFilter(String name);
+
+    /**
      * Updates the query string with the filters applied
      */
     void updateQuery();

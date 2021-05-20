@@ -1,23 +1,29 @@
-newsfeed/ShowsMenu.java
- newsfeed.ShowsMenu
-article/News.java
- article.News
-newsfeed/MainApplication.java
- newsfeed.MainApplication
 article/Article.java
  article.Article
-newsfeed/Globals.java
- newsfeed.Globals
-users/User.java
- users.User
-users/Authentication.java
- users.Authentication
-newsfeed/NewsFeedApplication.java
- newsfeed.NewsFeedApplication
 query/ApiQuery.java
  query.ApiQuery
  query.ApiQuery$1
 query/NewsEndpoint.java
  query.NewsEndpoint
+newsfeed/NewsFeedApplication.java
+ newsfeed.NewsFeedApplication
+users/Authentication.java
+ users.Authentication
+newsfeed/ShowsMenu.java
+ newsfeed.ShowsMenu
+article/News.java
+ article.News
 query/NewsQuery.java
  query.NewsQuery
+ query.NewsQuery$1
+ query.NewsQuery$2
+newsfeed/Globals.java
+ newsfeed.Globals
+users/User.java
+ users.User
+newsfeed/MainApplication.java
+ newsfeed.MainApplication
+query/AllNewsQuery.java
+ query.AllNewsQuery
+query/TopNewsQuery.java
+ query.TopNewsQuery

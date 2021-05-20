@@ -16,6 +16,7 @@ public class NewsQuery implements ApiQuery {
     private String query;
     private NewsEndpoint endpoint;
     private Map<String, String> filterMap;
+    private Map<String, String> defaultFilter;
     protected JsonObject jsonResult;
 
     public NewsQuery() {
@@ -25,7 +26,10 @@ public class NewsQuery implements ApiQuery {
         endpoint = NewsEndpoint.TOP_HEADLINES;
 
         // Default filter is language: english
-        filterQuery("language", "en");
+        defaultFilter = new HashMap<>() {{
+            put("language", "en");
+        }};
+        clearFilters();
     }
 
     /**
@@ -37,8 +41,12 @@ public class NewsQuery implements ApiQuery {
         this();
         this.endpoint = endpoint;
         if(endpoint.equals(NewsEndpoint.EVERYTHING)) {
-            filterQuery("q", "a");
-            filterQuery("sortBy", "publishedAt");
+            // For EVERYTHING endpoint, one of q, source or domain is mandatory
+            defaultFilter = new HashMap<>() {{
+                put("q", "a");
+                put("sortBy", "publishedAt");
+            }};
+            clearFilters();
         }
     }
 
@@ -57,6 +65,23 @@ public class NewsQuery implements ApiQuery {
             throw new RuntimeException("The given value for '" + name +"' is not valid!");
         }
         filterMap.put(name, value);
+    }
+
+    @Override
+    public void removeFilter(@NotNull String key) {
+        if (defaultFilter.containsKey(key)) {
+            filterMap.replace(key, defaultFilter.get(key));
+        } else {
+            filterMap.remove(key);
+        }
+    }
+
+    @Override
+    public void clearFilters() {
+        filterMap.clear();
+        for (String key : defaultFilter.keySet()) {
+            filterQuery(key, defaultFilter.get(key));
+        }
     }
 
     @Override

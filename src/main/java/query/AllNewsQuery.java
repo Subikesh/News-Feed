@@ -1,5 +1,6 @@
 package query;
 
+import article.News;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -31,7 +32,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                 String newsString = getNewsString();
                 mainMenu += "Filters applied: " + getFilters();
                 if(newsString.isEmpty())
-                    mainMenu += "-- No news found for this filters. Generalize filters to view more news. --\n";
+                    mainMenu += "\n-- No news found for this filters. Generalize filters to view more news. --\n";
                 else
                     mainMenu += "\t\t\tPage no: " + pageNo +"/" + maxPages + "\n";
                 mainMenu += newsString;
@@ -44,11 +45,12 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                         "6. excludeDomains\n" +
                         "7. Date from\n" +
                         "8. Date to\n" +
-                        "9. SortBy\n";
+                        "9. SortBy\n" +
+                        "10. Clear filters\n";
                 if(pageNo < maxPages)
-                    mainMenu += "10. Next Page\n";
+                    mainMenu += "11. Next Page\n";
                 if(pageNo > 1)
-                    mainMenu += "11. Previous Page\n";
+                    mainMenu += "12. Previous Page\n";
                 mainMenu +=  "\n0. Go to main menu\n" +
                         "Your Option: ";
                 System.out.println(mainMenu);
@@ -107,68 +109,107 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                 case 1:
                     System.out.println("Possible language options: ar, de, en, es, fr, he, it, nl, no, pt, ru, se, " +
                             "ud, zh.\nEnter the language code: ");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("language", input);
+                    if(input.equals("0"))
+                        removeFilter("language");
+                    else
+                        filterQuery("language", input);
                     break;
                 case 2:
                     System.out.println("Enter the source' id:\n" +
                             "(Complete list of sources can from view sources in main page)");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("sources", input);
+                    if(input.equals("0"))
+                        removeFilter("sources");
+                    else
+                        filterQuery("sources", input);
                     break;
                 case 3:
                     System.out.println("Enter the search query: \n" +
                             "(Note: The search query should be url-encoded string.)");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("q", input);
+                    if(input.equals("0"))
+                        removeFilter("q");
+                    else
+                        filterQuery("q", input);
                     break;
                 case 4:
                     System.out.println("Enter the search query: \n" +
                             "(Note: The search query should be url-encoded string.)");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("qInTitle", input);
+                    if(input.equals("0"))
+                        removeFilter("qInTitle");
+                    else
+                        filterQuery("qInTitle", input);
                     break;
                 case 5:
                     System.out.println("Enter the domains to filter:\n" +
                             "(A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) " +
                             "to restrict the search to)\n");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("domains", input);
+                    if(input.equals("0"))
+                        removeFilter("domains");
+                    else
+                        filterQuery("domains", input);
                     break;
                 case 6:
                     System.out.println("Enter the domains to exclude:\n" +
                             "(A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) " +
                             "to restrict the search to)\n");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("excludeDomains", input);
+                    if(input.equals("0"))
+                        removeFilter("excludeDomains");
+                    else
+                        filterQuery("excludeDomains", input);
                     break;
                 case 7:
                     System.out.println("Enter the starting date:\n" +
                             "(Date should of 'yyyy-mm-dd' format. Should be within 1 month before today)");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("from", input);
+                    if(input.equals("0"))
+                        removeFilter("from");
+                    else
+                        filterQuery("from", input);
                     break;
                 case 8:
                     System.out.println("Enter the ending date:\n" +
                             "(Date should of 'yyyy-mm-dd' format. Should be within 1 month before today)");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("to", input);
+                    if(input.equals("0"))
+                        removeFilter("to");
+                    else
+                        filterQuery("to", input);
                     break;
                 case 9:
                     System.out.println("Enter the sorting attribute:\n" +
                             "(relevancy = articles more closely related to q come first.\n" +
                             "popularity = articles from popular sources and publishers come first.\n" +
                             "publishedAt = newest articles come first.)");
+                    System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
-                    filterQuery("sortBy", input);
+                    if(input.equals("0"))
+                        removeFilter("sortBy");
+                    else
+                        filterQuery("sortBy", input);
                     break;
                 case 10:
+                    clearFilters();
+                    break;
+                case 11:
                     if(pageNo < maxPages) {
                         pageNo++;
                         System.out.println("Page incremented");
                     }
                     break;
-                case 11:
+                case 12:
                     if(pageNo > 1) {
                         pageNo--;
                         System.out.println("Page decremented");
@@ -192,15 +233,10 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
     private void newsActions(int option) {
         if(option > 0 && option <= resultArray.size()) {
             JsonObject newsObject = resultArray.get(option - 1).getAsJsonObject();
-            System.out.println("Title: " + newsObject.get("title") +
-                    "\nAuthor: " + newsObject.get("author"));
+            News newsObj = new News(newsObject);
+            newsObj.showMenu();
         } else {
             System.out.println("Invalid input! Try again...");
         }
     }
-
-//    public static void main(String[] args) {
-//        AllNewsQuery newsQuery = new AllNewsQuery();
-//        newsQuery.showMenu();
-//    }
 }
