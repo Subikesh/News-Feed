@@ -33,16 +33,28 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                 else
                     mainMenu += "\t\t\tPage no: " + pageNo +"/" + maxPages + "\n";
                     mainMenu += newsString;
-                mainMenu += "\nFilters: (command: filter)\n" +
-                        "1. Country\n" +
-                        "2. Category\n" +
-                        "3. Sources\n" +
-                        "4. Search\n" +
-                        "5. Clear filters\n";
+                mainMenu += "\nFilters: (command: filter)\n";
+                if(getFilters().containsKey("sources")) {
+                    mainMenu += "(You cannot apply country and category when sources filter is applied.)\n";
+                    mainMenu += "\t1. Country\n" +
+                            "\t2. Category\n";
+                } else {
+                    mainMenu += "1. Country\n" +
+                            "2. Category\n";
+                }
+                if(getFilters().containsKey("country") || getFilters().containsKey("category")) {
+                    mainMenu += "(You cannot combine sources filter when country or category filters are applied.)\n";
+                    mainMenu += "\t3. Sources\n";
+                } else {
+                    mainMenu += "3. Sources\n";
+                }
+                mainMenu += "4. Search\n" +
+                        "5. Language\n" +
+                        "6. Clear filters\n";
                 if(pageNo < maxPages)
-                    mainMenu += "6. Next Page\n";
+                    mainMenu += "7. Next Page\n";
                 if(pageNo > 1)
-                    mainMenu += "7. Previous Page\n";
+                    mainMenu += "8. Previous Page\n";
                 mainMenu +=  "\n0. Go to main menu\n" +
                         "Your Option: ";
                 System.out.println(mainMenu);
@@ -99,6 +111,10 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
         try {
             switch (option) {
                 case 1:
+                    if(getFilters().containsKey("sources")) {
+                        System.out.println("Try applying this filter after removing sources filter\n");
+                        break;
+                    }
                     System.out.println("Possible country code options are: ae, ar, at, au, be, bg, br, ca, ch, cu,\n" +
                             "cz, cn, co, de, eg, fr, gb, gr, hk, hu, id, ie, il, in, it, jp, kr, lt, lv, ma, mx, my, ng, nl,\n" +
                             "no, nz, ph, pl, pt, ro, rs, ru, sa, se, sg, si, sk, th, tr, tw, ua, us, ve, za.\n" +
@@ -111,6 +127,10 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         filterQuery("country", input);
                     break;
                 case 2:
+                    if(getFilters().containsKey("sources")) {
+                        System.out.println("Try applying this filter after removing sources filter\n");
+                        break;
+                    }
                     System.out.println("Category options are: business, entertainment, general, health, science, \n" +
                             "sports, technology.\n" +
                             "Enter the category to filter: ");
@@ -122,6 +142,10 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         filterQuery("category", input);
                     break;
                 case 3:
+                    if(getFilters().containsKey("country") || getFilters().containsKey("category")) {
+                        System.out.println("Try applying this filter after removing country or category filter.\n");
+                        break;
+                    }
                     System.out.println("Enter the source' id:\n" +
                             "(Complete list of sources can from view sources in main page)");
                     System.out.println("Press 0 to reset filter");
@@ -142,15 +166,25 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         filterQuery("q", input);
                     break;
                 case 5:
-                    clearFilters();
+                    System.out.println("Possible language options: ar, de, en, es, fr, he, it, nl, no, pt, ru, se, " +
+                            "ud, zh.\nEnter the language code: ");
+                    System.out.println("Press 0 to reset filter: ");
+                    input = Globals.input.readLine();
+                    if(input.equals("0"))
+                        removeFilter("language");
+                    else
+                        filterQuery("language", input);
                     break;
                 case 6:
+                    clearFilters();
+                    break;
+                case 7:
                     if(pageNo < maxPages) {
                         pageNo++;
                         System.out.println("Page incremented");
                     }
                     break;
-                case 7:
+                case 8:
                     if(pageNo > 1) {
                         pageNo--;
                         System.out.println("Page decremented");

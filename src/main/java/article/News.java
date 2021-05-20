@@ -1,5 +1,6 @@
 package article;
 
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import newsfeed.Globals;
 import users.Authentication;
@@ -33,10 +34,10 @@ public class News implements Article {
      */
     @Override
     public void copyFromJson(JsonObject obj) {
-        if(obj.get("author") != null)
-            author = obj.get("author").getAsString();
-        else
+        if(obj.get("author").isJsonNull())
             author = null;
+        else
+            author = obj.get("author").getAsString();
         title = obj.get("title").getAsString();
         sourceName = obj.get("source").getAsJsonObject().get("name").getAsString();
         description = obj.get("description").getAsString();
