@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class Globals {
     public static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-
+    public static final Authentication SESSION = new Authentication();
     // File names:
     public static final String USER_FILE = "users.txt";
 }

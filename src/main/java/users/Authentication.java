@@ -18,12 +18,11 @@ public class Authentication {
 
     }
 
-    public static boolean isLoggedIn() {
-        return !Authentication.currUser.equals(guestUser);
+    public boolean isLoggedIn() {
+        return !currUser.equals(guestUser);
     }
 
-    public static void register() {
-        User newUser;
+    public void register() {
         try {
             File userFile = new File(Globals.USER_FILE);
             userFile.createNewFile(); // Creates if file does not exist
@@ -52,7 +51,7 @@ public class Authentication {
         }
     }
 
-    public static boolean login() {
+    public boolean login() {
         User user = new User();
         user.getInputs();
         if (!isRegistered(user)) {
@@ -65,11 +64,11 @@ public class Authentication {
         }
     }
 
-    public static void login(User user) {
+    public void login(User user) {
         currUser = user;
     }
 
-    public static void logout() {
+    public void logout() {
         currUser = guestUser;
     }
 

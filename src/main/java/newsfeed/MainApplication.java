@@ -6,7 +6,6 @@ import java.io.*;
 
 import query.AllNewsQuery;
 import query.TopNewsQuery;
-import users.*;
 
 public class MainApplication implements ShowsMenu {
 
@@ -33,16 +32,16 @@ public class MainApplication implements ShowsMenu {
     }
 
     public void userActions(int option) {
-        if (Authentication.isLoggedIn()) {
+        if (Globals.SESSION.isLoggedIn()) {
             switch (option) {
                 case 1:
-                    Authentication.currUser.viewSubscriptions();
+                    Globals.SESSION.currUser.viewSubscriptions();
                     break;
                 case 2:
-                    Authentication.currUser.viewBookmarks();
+                    Globals.SESSION.currUser.viewBookmarks();
                     break;
                 case 3:
-                    Authentication.logout();
+                    Globals.SESSION.logout();
                     break;
                 default:
                     System.out.println("Invalid input! Try again...");
@@ -51,10 +50,10 @@ public class MainApplication implements ShowsMenu {
         } else {
             switch (option) {
                 case 1:
-                    Authentication.login();
+                    Globals.SESSION.login();
                     break;
                 case 2:
-                    Authentication.register();
+                    Globals.SESSION.register();
                     break;
                 default:
                     System.out.println("Invalid input! Try again...");
@@ -75,8 +74,8 @@ public class MainApplication implements ShowsMenu {
                         "3. View news sources\n" +
                         "4. How to use the interface?\n\n";
                 StringBuilder userMenu = new StringBuilder(mainMenu);
-                userMenu.append("user\n");
-                if(Authentication.isLoggedIn())
+                userMenu.append("User (command: user)\n");
+                if(Globals.SESSION.isLoggedIn())
                     userMenu.append("1. View / Manage Subscriptions\n" +
                             "2. View Bookmarks\n" +
                             "3. Logout\n");
