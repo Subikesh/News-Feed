@@ -6,6 +6,7 @@ import java.io.*;
 
 import query.AllNewsQuery;
 import query.TopNewsQuery;
+import utilities.Globals;
 
 public class MainApplication implements ShowsMenu {
 
@@ -24,7 +25,6 @@ public class MainApplication implements ShowsMenu {
                 System.out.println("Redirecting to the Help markdown file.");
                 break;
             case 0:
-                System.out.println("Thank you for using the application");
                 break;
             default:
                 System.out.println("Invalid Input! Try again...");
@@ -86,7 +86,9 @@ public class MainApplication implements ShowsMenu {
                 System.out.println(mainMenu + "Your option: ");
                 option = Globals.input.readLine();
                 performAction(option);
-            } while(!option.equals("0"));
+            } while(!(option.charAt(0) == '0'));
+            Globals.writeObjects(Globals.SESSION.getRegisteredUsers());
+            System.out.println("Thank you for using the application");
         } catch (IOException e) {
             e.printStackTrace();
         }

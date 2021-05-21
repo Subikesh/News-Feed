@@ -1,6 +1,6 @@
 package users;
 
-import newsfeed.*;
+import utilities.Globals;
 
 import java.io.IOException;
 import java.io.Serializable;

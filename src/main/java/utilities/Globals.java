@@ -1,4 +1,4 @@
-package newsfeed;
+package utilities;
 
 import users.Authentication;
 
@@ -12,12 +12,14 @@ public class Globals {
     public static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     public static final Authentication SESSION = new Authentication();
     // File names:
-    public static final String USER_FILE = "users.ser";
+    public static final String USER_FILE = "users.txt";
 
-    public static <T> void writeObjects(ObjectOutputStream ob, Collection<T> objList) throws IOException {
+    public static <T> void writeObjects(Collection<T> objList) throws IOException {
+        ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream(USER_FILE));
         for (T obj : objList) {
             ob.writeObject(obj);
         }
+        ob.close();
     }
 }
 

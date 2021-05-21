@@ -1,7 +1,7 @@
 package article;
 
 import com.google.gson.JsonObject;
-import newsfeed.Globals;
+import utilities.Globals;
 
 import java.awt.*;
 import java.io.IOException;

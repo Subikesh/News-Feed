@@ -1,6 +1,6 @@
 package users;
 
-import newsfeed.Globals;
+import utilities.Globals;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -14,28 +14,33 @@ public class Authentication {
     public final User guestUser = new User("_guest_", "_guest_");
     public User currUser = guestUser;
     final int MAX_USERS = 15;
-    public static ObjectOutputStream objWrite;
-    public static ObjectInputStream objRead;
+    public static File f = new File(Globals.USER_FILE);
     // User list is stored so in queue. If more than 15 users come, the oldest registered user is popped
     private Queue<User> registeredUsers;
 
     public Authentication() {
         User user;
         registeredUsers = new LinkedList<>();
+        // Create new file if doesnt exist
         try {
-            objWrite = new ObjectOutputStream(new FileOutputStream(Globals.USER_FILE, true));
-            objRead = new ObjectInputStream(new FileInputStream(Globals.USER_FILE));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            while ((user = (User) objRead.readObject()) != null) {
-                registeredUsers.add(user);
-                System.out.println(registeredUsers);
+            f.createNewFile();
+        } catch (Exception e) {}
+
+        if (f.length() != 0) {
+            try {
+                FileInputStream file = null;
+                file = new FileInputStream(Globals.USER_FILE);
+                ObjectInputStream objRead = new ObjectInputStream(file);
+
+                while (registeredUsers.size() < MAX_USERS && file.available() != 0) {
+                    user = (User) objRead.readObject();
+                    registeredUsers.add(user);
+                    System.out.println(user);
+                }
+                objRead.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException | EOFException | StreamCorruptedException e) {
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -45,40 +50,30 @@ public class Authentication {
 
     public void register() {
         try {
-            File userFile = new File(Globals.USER_FILE);
-            userFile.createNewFile(); // Creates if file does not exist
-            try {
-                // Getting input till the user entered is not registered already
-                User user = new User();
+            // Getting input till the user entered is not registered already
+            User user = new User();
+            user.setUsername();
+            // Iterates till user enters a valid username
+            while (isRegistered(user)) {
+                System.out.println("Username already registered! Try another or try logging in.");
                 user.setUsername();
-                // Iterates till user enters a valid username
-                while (isRegistered(user)) {
-                    System.out.println("Username already registered! Try another or try logging in.");
-                    user.setUsername();
-                }
-                System.out.println("Username accepted");
-                user.setPassword();
-
-                if (registeredUsers.size() < MAX_USERS) {
-                    // Write new user to file
-                    objWrite.writeObject(user);
-                    registeredUsers.add(user);
-                } else {
-                    registeredUsers.poll();
-                    registeredUsers.add(user);
-                    Globals.writeObjects(objWrite, registeredUsers);
-                }
-                // Log-in newly created user
-                login(user);
-                System.out.println("'" + user.getUsername() + "' is logged in.");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
+            System.out.println("Username accepted");
+            user.setPassword();
+
+            // If total number of users are exceeding the MAX_USERS, then the oldest registration is deleted
+            if (registeredUsers.size() >= MAX_USERS) {
+                registeredUsers.poll();
+            }
+            System.out.println(registeredUsers.size());
+            registeredUsers.add(user);
+
+            // Login the newly created user
+            login(user);
+            System.out.println("'" + user.getUsername() + "' is logged in.");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-//        System.out.println("Registered users: \n");
-//        getUsers();
     }
 
     public boolean login() {
@@ -100,6 +95,10 @@ public class Authentication {
 
     public void logout() {
         currUser = guestUser;
+    }
+
+    public Queue<User> getRegisteredUsers() {
+        return registeredUsers;
     }
 
     /**
