@@ -1,9 +1,7 @@
 package article;
 
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import newsfeed.Globals;
-import users.Authentication;
 
 import java.awt.*;
 import java.io.IOException;
@@ -68,7 +66,7 @@ public class News implements Article {
                 showDetails();
                 String menu = "\nOptions: \n" +
                         "1. View full article (Open website)\n";
-                if (Authentication.isLoggedIn())
+                if (Globals.SESSION.isLoggedIn())
                     menu += "2. Make article offline\n" +
                             "3. Bookmark news\n";
                 menu += "\n0. Go to main menu\n" +
@@ -93,13 +91,13 @@ public class News implements Article {
                     gotoWebsite();
                     break;
                 case 2:
-                    if(Authentication.isLoggedIn())
+                    if(Globals.SESSION.isLoggedIn())
                         System.out.println("implement make offline");
                     else
                         System.out.println("Invalid input. Try again...");
                     break;
                 case 3:
-                    if(Authentication.isLoggedIn())
+                    if(Globals.SESSION.isLoggedIn())
                         System.out.println("implement add bookmark");
                     else
                         System.out.println("Invalid input. Try again...");
