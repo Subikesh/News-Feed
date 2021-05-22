@@ -22,10 +22,6 @@ public class Authentication {
         registeredUsers = new LinkedList<>();
         // Create new file if doesn't exist
         registeredUsers = (Queue<User>) Globals.readObjects(registeredUsers, Globals.USER_FILE);
-        for (User newUser : registeredUsers) {
-            newUser.readOffline();
-        }
-        System.out.println(registeredUsers);
     }
 
     public boolean isLoggedIn() {
@@ -49,7 +45,6 @@ public class Authentication {
             if (registeredUsers.size() >= MAX_USERS) {
                 registeredUsers.poll();
             }
-            System.out.println(registeredUsers.size());
             registeredUsers.add(user);
 
             // Login the newly created user
@@ -65,7 +60,7 @@ public class Authentication {
         user.getInputs();
         for (User reg : registeredUsers) {
             if (reg.equals(user) && reg.getPassword().equals(user.getPassword())) {
-                login(user);
+                login(reg);
                 System.out.println("User logged in successfully.");
                 return true;
             }
@@ -76,24 +71,15 @@ public class Authentication {
 
     public void login(User user) {
         currUser = user;
-        currUser.readOffline();
     }
 
     public void logout() {
-        try {
-            currUser.saveOffline();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         currUser = guestUser;
     }
 
     public void saveFiles() {
         try {
             Globals.writeObjects(Globals.SESSION.getRegisteredUsers(), Globals.USER_FILE);
-            if (isLoggedIn()) {
-                currUser.saveOffline();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }

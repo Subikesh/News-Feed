@@ -19,13 +19,13 @@ newsfeed/ShowsMenu.java
 query/ApiQuery.java
  query.ApiQuery
  query.ApiQuery$1
-users/User.java
- users.User
 article/News.java
  article.News
 utilities/Globals.java
  utilities.Globals
 newsfeed/MainApplication.java
  newsfeed.MainApplication
+users/User.java
+ users.User
 users/Authentication.java
  users.Authentication

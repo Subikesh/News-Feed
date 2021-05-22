@@ -58,10 +58,6 @@ public class User implements Serializable {
         return username;
     }
 
-    public void readOffline() {
-        bookmarks = (HashSet<String>) Globals.readObjects(bookmarks, bkFile);
-    }
-
     public void viewSubscriptions() {
         System.out.println("Here the sources set is printed");
     }
@@ -74,11 +70,6 @@ public class User implements Serializable {
         // Print news of corresponding bookmarks
         System.out.println(bookmarks);
     }
-
-    public void saveOffline() throws IOException {
-        Globals.writeObjects(bookmarks, bkFile);
-    }
-
 
     @Override
     public String toString() {
