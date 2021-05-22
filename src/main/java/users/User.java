@@ -37,6 +37,10 @@ public class User implements Serializable {
         username = Globals.input.readLine();
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword() throws IOException {
         System.out.println("Enter password :");
         password = Globals.input.readLine();
@@ -44,6 +48,10 @@ public class User implements Serializable {
 
     public String getUsername() {
         return username;
+    }
+
+    public void readOffline() throws IOException {
+        bookmarks = (Set<String>) Globals.readObjects(bookmarks, bkFile);
     }
 
     public void viewSubscriptions() {

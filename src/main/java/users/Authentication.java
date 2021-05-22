@@ -20,28 +20,8 @@ public class Authentication {
 
     public Authentication() {
         User user;
-        registeredUsers = new LinkedList<>();
-        // Create new file if doesnt exist
-        try {
-            f.createNewFile();
-        } catch (Exception e) {}
-
-        if (f.length() != 0) {
-            try {
-                FileInputStream file = null;
-                file = new FileInputStream(Globals.USER_FILE);
-                ObjectInputStream objRead = new ObjectInputStream(file);
-
-                while (registeredUsers.size() < MAX_USERS && file.available() != 0) {
-                    user = (User) objRead.readObject();
-                    registeredUsers.add(user);
-                    System.out.println(user);
-                }
-                objRead.close();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+        // Create new file if doesn't exist
+        registeredUsers = (Queue<User>) Globals.readObjects(registeredUsers, Globals.USER_FILE);
     }
 
     public boolean isLoggedIn() {
@@ -79,14 +59,20 @@ public class Authentication {
     public boolean login() {
         User user = new User();
         user.getInputs();
-        if (!isRegistered(user)) {
-            System.out.println("User credentials incorrect.");
-            return false;
-        } else {
-            login(user);
-            System.out.println("User logged in successfully.");
-            return true;
+        try {
+            currUser.readOffline();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        for (User reg : registeredUsers) {
+            if (reg.equals(user) && reg.getPassword().equals(user.getPassword())) {
+                login(user);
+                System.out.println("User logged in successfully.");
+                return true;
+            }
+        }
+        System.out.println("User credentials incorrect.");
+        return false;
     }
 
     public void login(User user) {
