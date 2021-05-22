@@ -65,10 +65,17 @@ public class News implements Article {
             do {
                 showDetails();
                 String menu = "\nOptions: \n" +
-                        "1. View full article (Open website)\n";
-                if (Globals.SESSION.isLoggedIn())
+                        "1. View full article (Open website)\n" +
+                        "(Please login to add bookmark and save news offline)\n";
+                if (Globals.SESSION.isLoggedIn()) {
                     menu += "2. Make article offline\n" +
-                            "3. Bookmark news\n";
+                            "3. Bookmark news";
+                    if (Globals.SESSION.currUser.bookmarks.contains(title)) {
+                        menu += " (Already bookmarked)";
+                    }
+                    menu += "\n";
+                }
+
                 menu += "\n0. Go to main menu\n" +
                         "Your option: ";
                 System.out.println(menu);
@@ -97,8 +104,10 @@ public class News implements Article {
                         System.out.println("Invalid input. Try again...");
                     break;
                 case 3:
-                    if(Globals.SESSION.isLoggedIn())
-                        System.out.println("implement add bookmark");
+                    if(Globals.SESSION.isLoggedIn()) {
+                        Globals.SESSION.currUser.addBookmark(title);
+                        System.out.println("Bookmark added");
+                    }
                     else
                         System.out.println("Invalid input. Try again...");
                     break;

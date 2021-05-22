@@ -14,14 +14,18 @@ public class Authentication {
     public final User guestUser = new User("_guest_", "_guest_");
     public User currUser = guestUser;
     final int MAX_USERS = 15;
-    public static File f = new File(Globals.USER_FILE);
     // User list is stored so in queue. If more than 15 users come, the oldest registered user is popped
     private Queue<User> registeredUsers;
 
     public Authentication() {
         User user;
+        registeredUsers = new LinkedList<>();
         // Create new file if doesn't exist
         registeredUsers = (Queue<User>) Globals.readObjects(registeredUsers, Globals.USER_FILE);
+        for (User newUser : registeredUsers) {
+            newUser.readOffline();
+        }
+        System.out.println(registeredUsers);
     }
 
     public boolean isLoggedIn() {
@@ -59,11 +63,6 @@ public class Authentication {
     public boolean login() {
         User user = new User();
         user.getInputs();
-        try {
-            currUser.readOffline();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for (User reg : registeredUsers) {
             if (reg.equals(user) && reg.getPassword().equals(user.getPassword())) {
                 login(user);
@@ -77,10 +76,27 @@ public class Authentication {
 
     public void login(User user) {
         currUser = user;
+        currUser.readOffline();
     }
 
     public void logout() {
+        try {
+            currUser.saveOffline();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         currUser = guestUser;
+    }
+
+    public void saveFiles() {
+        try {
+            Globals.writeObjects(Globals.SESSION.getRegisteredUsers(), Globals.USER_FILE);
+            if (isLoggedIn()) {
+                currUser.saveOffline();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Queue<User> getRegisteredUsers() {

@@ -4,7 +4,9 @@ import utilities.Globals;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * User class contains the details of an user
@@ -13,14 +15,19 @@ import java.util.Objects;
 public class User implements Serializable {
     private String username;
     private String password;
+    public Set<String> bookmarks;
+    private String bkFile;
 
     public User() {
         username = null;
         password = null;
+        bookmarks = new HashSet<>();
     }
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        bookmarks = new HashSet<>();
+        bkFile = username + "_bk.txt";
     }
     
     public void getInputs() {
@@ -35,6 +42,7 @@ public class User implements Serializable {
     public void setUsername() throws IOException {
         System.out.println("Enter username :");
         username = Globals.input.readLine();
+        bkFile = username + "_bk.txt";
     }
 
     public String getPassword() {
@@ -50,23 +58,35 @@ public class User implements Serializable {
         return username;
     }
 
-    public void readOffline() throws IOException {
-        bookmarks = (Set<String>) Globals.readObjects(bookmarks, bkFile);
+    public void readOffline() {
+        bookmarks = (HashSet<String>) Globals.readObjects(bookmarks, bkFile);
     }
 
     public void viewSubscriptions() {
         System.out.println("Here the sources set is printed");
     }
 
-    public void viewBookmarks() {
-        System.out.println("Here the bookmarks are displayed");
+    public void addBookmark(String title) {
+        bookmarks.add(title);
     }
+
+    public void viewBookmarks() {
+        // Print news of corresponding bookmarks
+        System.out.println(bookmarks);
+    }
+
+    public void saveOffline() throws IOException {
+        Globals.writeObjects(bookmarks, bkFile);
+    }
+
 
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", bookmarks=" + bookmarks +
+                ", bkFile='" + bkFile + '\'' +
                 '}';
     }
 
