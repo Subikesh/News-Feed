@@ -70,16 +70,21 @@ public class Authentication {
     }
 
     public void login(User user) {
+        user.readOffline();
         currUser = user;
     }
 
     public void logout() {
-        currUser = guestUser;
+        if(currUser != guestUser) {
+            currUser.writeOffline();
+            currUser = guestUser;
+        }
     }
 
     public void saveFiles() {
         try {
             Globals.writeObjects(Globals.SESSION.getRegisteredUsers(), Globals.USER_FILE);
+            logout();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,21 +5,22 @@ import utilities.Globals;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
  * Class displays details of a single news object from a JsonObject
  */
-public class News implements Article {
+public class News implements Article, Serializable {
     private String author;
-    private String title;
+    public String title;
     private String sourceName;
     private String description;
     private String publishedAt;
     private String content;
     private String url;
-    JsonObject newsJson;
+    transient JsonObject newsJson;
 
     public News(JsonObject obj) {
         newsJson = obj;
@@ -42,6 +43,11 @@ public class News implements Article {
         publishedAt = obj.get("publishedAt").getAsString();
         content = obj.get("content").getAsString();
         url = obj.get("url").getAsString();
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
     }
 
     @Override

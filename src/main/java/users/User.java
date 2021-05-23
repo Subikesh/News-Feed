@@ -1,12 +1,14 @@
 package users;
 
+import article.News;
+import article.OfflineArticles;
+import query.AllNewsQuery;
+import query.ApiQuery;
 import utilities.Globals;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * User class contains the details of an user
@@ -15,19 +17,19 @@ import java.util.Set;
 public class User implements Serializable {
     private String username;
     private String password;
-    public Set<String> bookmarks;
-    private String bkFile;
+    public ArrayList<String> bookmarks;
+    public transient OfflineArticles<News> offlineNews;
+    public transient OfflineArticles<News> bookmarkNews;
 
     public User() {
         username = null;
         password = null;
-        bookmarks = new HashSet<>();
+        bookmarks = new ArrayList<>();
     }
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        bookmarks = new HashSet<>();
-        bkFile = username + "_bk.txt";
+        bookmarks = new ArrayList<>();
     }
     
     public void getInputs() {
@@ -39,10 +41,19 @@ public class User implements Serializable {
         }
     }
 
+    public void readOffline() {
+        offlineNews = new OfflineArticles<>(this, "off");
+        bookmarkNews = new OfflineArticles<>(this, "bk");
+    }
+
+    public void writeOffline() {
+        offlineNews.writeOffline();
+        bookmarkNews.writeOffline();
+    }
+
     public void setUsername() throws IOException {
         System.out.println("Enter username :");
         username = Globals.input.readLine();
-        bkFile = username + "_bk.txt";
     }
 
     public String getPassword() {
@@ -67,8 +78,36 @@ public class User implements Serializable {
     }
 
     public void viewBookmarks() {
-        // Print news of corresponding bookmarks
-        System.out.println(bookmarks);
+//        int option = 0;
+//        do {
+//            // Print news of corresponding bookmarks
+//            System.out.println("Bookmarks: ");
+//            for (int i = 0; i < bookmarks.size(); i++) {
+//                System.out.println((i+1) + ". " + bookmarks.get(i));
+//            }
+//            System.out.println("0. Go to main menu\nYour option: ");
+//            try {
+//                option = Integer.parseInt(Globals.input.readLine());
+//                bookmarkAction(option);
+//            } catch (NumberFormatException e) {
+//                System.out.println("Invalid input. Try again...");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } while (option != 0);
+        bookmarkNews.showMenu();
+    }
+
+    private void bookmarkAction(int option) {
+        if (option > bookmarks.size() || option < 0) {
+            System.out.println("Invalid input. Try again...");
+        } else {
+            ApiQuery query = new AllNewsQuery();
+            query.filterQuery("qInTitle", "\"" + bookmarks.get(option-1) + "\"");
+            query.filterQuery("sortBy", "relevancy");
+            News bk = new News(query.getResultJson().get(0).getAsJsonObject());
+            bk.showMenu();
+        }
     }
 
     @Override
@@ -77,7 +116,6 @@ public class User implements Serializable {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", bookmarks=" + bookmarks +
-                ", bkFile='" + bkFile + '\'' +
                 '}';
     }
 

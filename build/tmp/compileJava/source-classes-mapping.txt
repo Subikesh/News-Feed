@@ -2,30 +2,32 @@ newsfeed/NewsFeedApplication.java
  newsfeed.NewsFeedApplication
 utilities/MyObjectWriter.java
  utilities.MyObjectWriter
-article/Article.java
- article.Article
+newsfeed/MainApplication.java
+ newsfeed.MainApplication
 query/NewsQuery.java
  query.NewsQuery
  query.NewsQuery$1
  query.NewsQuery$2
 query/NewsEndpoint.java
  query.NewsEndpoint
-query/TopNewsQuery.java
- query.TopNewsQuery
-query/AllNewsQuery.java
- query.AllNewsQuery
-newsfeed/ShowsMenu.java
- newsfeed.ShowsMenu
 query/ApiQuery.java
  query.ApiQuery
  query.ApiQuery$1
-article/News.java
- article.News
-utilities/Globals.java
- utilities.Globals
-newsfeed/MainApplication.java
- newsfeed.MainApplication
-users/User.java
- users.User
+newsfeed/ShowsMenu.java
+ newsfeed.ShowsMenu
 users/Authentication.java
  users.Authentication
+utilities/Globals.java
+ utilities.Globals
+article/OfflineArticles.java
+ article.OfflineArticles
+article/Article.java
+ article.Article
+article/News.java
+ article.News
+query/AllNewsQuery.java
+ query.AllNewsQuery
+users/User.java
+ users.User
+query/TopNewsQuery.java
+ query.TopNewsQuery
