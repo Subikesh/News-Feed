@@ -15,7 +15,7 @@ public interface ApiQuery {
     HashMap<String, String> REGEX_MAP = new HashMap<>()
     {{
         put("q", "^[^(=&/)]+$");
-        put("qlnTitle", "^[^(=&/)]+$");
+        put("qInTitle", "^[^(=&/)]+$");
         put("sources", "^[a-z\\-]+$");
         put("category", "^[a-z]+$");
         put("country", "[a-z]{2}");
@@ -57,13 +57,6 @@ public interface ApiQuery {
      * Makes an API call for the filters made till then and stores the JSON in result
      */
     void makeAPICall();
-
-    /**
-     * Returns result as objects
-     * @param <T> Object like News or Source
-     * @return a news or source object for the class in which it is implemented
-     */
-    <T extends Article> List<T> getResult();
 
     /**
      * Get the result of the filters in JSON array format

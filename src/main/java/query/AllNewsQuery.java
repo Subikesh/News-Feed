@@ -1,9 +1,7 @@
 package query;
 
 import article.News;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import utilities.Globals;
 import newsfeed.ShowsMenu;
 
@@ -80,7 +78,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
     }
 
     /**
-     * Calls the API setting the page size and page number
+     * Calls the API and sets the page size and page number
      * Gets the headlines of all the news and returns as a string format
      * @return String which has numbers list of news headlines returned by API
      */

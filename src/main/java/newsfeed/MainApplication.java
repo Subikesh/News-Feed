@@ -86,10 +86,11 @@ public class MainApplication implements ShowsMenu {
                 option = Globals.input.readLine();
                 performAction(option);
             } while(!(option.charAt(0) == '0'));
-            Globals.SESSION.saveFiles();
-            System.out.println("Thank you for using the application");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            Globals.SESSION.saveFiles();
+            System.out.println("Thank you for using the application");
         }
     }
 

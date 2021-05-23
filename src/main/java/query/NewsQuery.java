@@ -130,12 +130,6 @@ public class NewsQuery implements ApiQuery {
     }
 
     @Override
-    public <T extends Article> List<T> getResult() {
-        makeAPICall();
-        return null;
-    }
-
-    @Override
     public JsonArray getResultJson() throws RuntimeException {
         makeAPICall();
         if (jsonResult.get("status").getAsString().equals("error")) {
