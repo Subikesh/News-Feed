@@ -71,15 +71,20 @@ public class News implements Article, Serializable {
             do {
                 showDetails();
                 String menu = "\nOptions: \n" +
-                        "1. View full article (Open website)\n" +
-                        "(Please login to add bookmark and save news offline)\n";
+                        "1. View full article (Open website)\n";
                 if (Globals.SESSION.isLoggedIn()) {
-                    menu += "2. Make article offline\n" +
-                            "3. Bookmark news";
-                    if (Globals.SESSION.currUser.bookmarks.contains(title)) {
-                        menu += " (Already bookmarked)";
+                    if (Globals.SESSION.currUser.offlineNews.contains(this)) {
+                        menu += "2. Remove Offline news\n";
+                    } else {
+                        menu += "2. Make article offline\n";
                     }
-                    menu += "\n";
+                    if (Globals.SESSION.currUser.bookmarkNews.contains(this)) {
+                        menu += "3. Remove Bookmark\n";
+                    } else {
+                        menu += "3. Bookmark news\n";
+                    }
+                } else {
+                    menu += "(Please login to add bookmark and save news offline)\n";
                 }
 
                 menu += "\n0. Go to main menu\n" +
@@ -104,15 +109,30 @@ public class News implements Article, Serializable {
                     gotoWebsite();
                     break;
                 case 2:
-                    if(Globals.SESSION.isLoggedIn())
-                        System.out.println("implement make offline");
-                    else
+                    if(Globals.SESSION.isLoggedIn()) {
+                        if (Globals.SESSION.currUser.offlineNews.contains(this)) {
+                            // Remove offline news
+                            Globals.SESSION.currUser.offlineNews.remove(this);
+                            System.out.println("Offline news removed");
+                        } else {
+                            // Add offline news
+                            Globals.SESSION.currUser.offlineNews.add(this);
+                            System.out.println("Offline news added");
+                        }
+                    } else
                         System.out.println("Invalid input. Try again...");
                     break;
                 case 3:
                     if(Globals.SESSION.isLoggedIn()) {
-                        Globals.SESSION.currUser.addBookmark(title);
-                        System.out.println("Bookmark added");
+                        if (Globals.SESSION.currUser.bookmarkNews.contains(this)) {
+                            // Remove bookmark
+                            Globals.SESSION.currUser.bookmarkNews.remove(this);
+                            System.out.println("Bookmark removed");
+                        } else {
+                            // Add bookmark
+                            Globals.SESSION.currUser.bookmarkNews.add(this);
+                            System.out.println("Bookmark added");
+                        }
                     }
                     else
                         System.out.println("Invalid input. Try again...");

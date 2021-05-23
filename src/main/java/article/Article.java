@@ -11,4 +11,5 @@ public interface Article extends ShowsMenu {
     void copyFromJson(JsonObject obj);
     void gotoWebsite();
     void showDetails();
+    String getTitle();
 }

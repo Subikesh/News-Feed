@@ -39,6 +39,7 @@ public class Globals {
                     list.add(obj);
                 }
                 objRead.close();
+            } catch (EOFException e) {
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
