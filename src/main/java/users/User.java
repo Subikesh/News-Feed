@@ -42,13 +42,18 @@ public class User implements Serializable {
     }
 
     public void readOffline() {
-        offlineNews = new OfflineArticles<>(this, "off");
-        bookmarkNews = new OfflineArticles<>(this, "bk");
+        this.offlineNews = new OfflineArticles<>(this, "off", "Offline News");
+        this.bookmarkNews = new OfflineArticles<>(this, "bk", "Bookmark News");
     }
 
     public void writeOffline() {
         offlineNews.writeOffline();
         bookmarkNews.writeOffline();
+    }
+
+    public void deleteOffline() {
+        offlineNews.deleteFile();
+        bookmarkNews.deleteFile();
     }
 
     public void setUsername() throws IOException {
@@ -73,41 +78,12 @@ public class User implements Serializable {
         System.out.println("Here the sources set is printed");
     }
 
-    public void addBookmark(String title) {
-        bookmarks.add(title);
-    }
-
     public void viewBookmarks() {
-//        int option = 0;
-//        do {
-//            // Print news of corresponding bookmarks
-//            System.out.println("Bookmarks: ");
-//            for (int i = 0; i < bookmarks.size(); i++) {
-//                System.out.println((i+1) + ". " + bookmarks.get(i));
-//            }
-//            System.out.println("0. Go to main menu\nYour option: ");
-//            try {
-//                option = Integer.parseInt(Globals.input.readLine());
-//                bookmarkAction(option);
-//            } catch (NumberFormatException e) {
-//                System.out.println("Invalid input. Try again...");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        } while (option != 0);
         bookmarkNews.showMenu();
     }
 
-    private void bookmarkAction(int option) {
-        if (option > bookmarks.size() || option < 0) {
-            System.out.println("Invalid input. Try again...");
-        } else {
-            ApiQuery query = new AllNewsQuery();
-            query.filterQuery("qInTitle", "\"" + bookmarks.get(option-1) + "\"");
-            query.filterQuery("sortBy", "relevancy");
-            News bk = new News(query.getResultJson().get(0).getAsJsonObject());
-            bk.showMenu();
-        }
+    public void viewOffline() {
+        offlineNews.showMenu();
     }
 
     @Override

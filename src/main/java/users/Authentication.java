@@ -43,7 +43,7 @@ public class Authentication {
 
             // If total number of users are exceeding the MAX_USERS, then the oldest registration is deleted
             if (registeredUsers.size() >= MAX_USERS) {
-                registeredUsers.poll();
+                deleteUser(registeredUsers.peek());
             }
             registeredUsers.add(user);
 
@@ -76,9 +76,25 @@ public class Authentication {
 
     public void logout() {
         if(currUser != guestUser) {
+            System.out.println("Saving cache data...");
             currUser.writeOffline();
             currUser = guestUser;
         }
+    }
+
+    // Delete the currUser
+    public void deleteUser() {
+        if (isLoggedIn()) {
+            User temp = currUser;
+            logout();
+            deleteUser(temp);
+        }
+    }
+
+    // Delete the user passed as parameter
+    public void deleteUser(User user) {
+        user.deleteOffline();
+        registeredUsers.remove(user);
     }
 
     public void saveFiles() {

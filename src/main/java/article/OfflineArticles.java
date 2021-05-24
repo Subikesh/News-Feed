@@ -4,6 +4,7 @@ import newsfeed.ShowsMenu;
 import users.User;
 import utilities.Globals;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,12 +14,16 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
     public ArrayList<T> articleList;
     public String fileCode;
     public String fileName;
+    public int max_len;
+    public String title;
 
-    public OfflineArticles(User user, String fileCode) {
+    public OfflineArticles(User user, String fileCode, String title) {
+        this.title = title;
         userObj = user;
         this.fileCode = fileCode;
         fileName = user.getUsername() + fileCode + ".txt";
         articleList = new ArrayList<>();
+        max_len = 15;
         articleList = (ArrayList<T>) Globals.readObjects(articleList, fileName);
     }
 
@@ -31,7 +36,18 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
         }
     }
 
+    public void deleteFile() {
+        File file = new File(fileName);
+        if (file.delete()) {
+            System.out.println("File deleted");
+        } else
+            System.out.println("Not deleted");
+    }
+
     public void add(T a) {
+        if (articleList.size() == max_len) {
+            articleList.remove(0);
+        }
         articleList.add(a);
     }
 
@@ -51,7 +67,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
     public void showMenu() {
         String option = "0";
         do {
-            System.out.println("Articles");
+            System.out.println("-------------------- "+ title + " --------------------");
             if (articleList.size() == 0) {
                 System.out.println("---No articles to display here---");
                 break;
