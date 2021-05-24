@@ -1,4 +1,4 @@
-package newsfeed;
+package utilities;
 
 /**
  * Implemented by any class which displays main menu

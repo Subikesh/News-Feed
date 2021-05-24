@@ -1,7 +1,7 @@
 package article;
 
 import com.google.gson.JsonObject;
-import newsfeed.ShowsMenu;
+import utilities.ShowsMenu;
 
 /**
  * Implemented by single news/source class

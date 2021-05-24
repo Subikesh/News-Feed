@@ -16,10 +16,10 @@ public class Globals {
 
     /**
      * Writes a list of serializable objects to a particular file
-     * @param objList
-     * @param fileName
-     * @param <T>
-     * @throws IOException
+     * @param objList list of objects to write to file
+     * @param fileName filename to which objects are written
+     * @param <T> a class which is serializable whose object list is written
+     * @throws IOException when some error occurs with file writing
      */
     public static <T> void writeObjects(Collection<T> objList, String fileName) throws IOException {
         File f = new File(fileName);

@@ -7,6 +7,7 @@ import java.io.*;
 import query.AllNewsQuery;
 import query.TopNewsQuery;
 import utilities.Globals;
+import utilities.ShowsMenu;
 
 public class MainApplication implements ShowsMenu {
 

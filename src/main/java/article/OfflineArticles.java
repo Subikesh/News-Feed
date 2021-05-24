@@ -1,6 +1,6 @@
 package article;
 
-import newsfeed.ShowsMenu;
+import utilities.ShowsMenu;
 import users.User;
 import utilities.Globals;
 

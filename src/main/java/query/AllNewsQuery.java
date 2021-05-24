@@ -3,7 +3,7 @@ package query;
 import article.News;
 import com.google.gson.*;
 import utilities.Globals;
-import newsfeed.ShowsMenu;
+import utilities.ShowsMenu;
 
 import java.io.IOException;
 

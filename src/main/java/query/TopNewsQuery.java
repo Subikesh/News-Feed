@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import utilities.Globals;
-import newsfeed.ShowsMenu;
+import utilities.ShowsMenu;
 
 import java.io.IOException;
 
