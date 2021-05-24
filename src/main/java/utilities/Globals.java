@@ -14,6 +14,13 @@ public class Globals {
     // File names:
     public static final String USER_FILE = "users.txt";
 
+    /**
+     * Writes a list of serializable objects to a particular file
+     * @param objList
+     * @param fileName
+     * @param <T>
+     * @throws IOException
+     */
     public static <T> void writeObjects(Collection<T> objList, String fileName) throws IOException {
         File f = new File(fileName);
         f.createNewFile();

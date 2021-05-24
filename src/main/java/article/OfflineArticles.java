@@ -4,12 +4,14 @@ import newsfeed.ShowsMenu;
 import users.User;
 import utilities.Globals;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Stores the list of news or source for offline, bookmark and subscriptions
+ * @param <T> Type of list - News or Source
+ */
 public class OfflineArticles<T extends Article> implements ShowsMenu {
-
     public User userObj;
     public ArrayList<T> articleList;
     public String fileCode;
@@ -17,6 +19,12 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
     public int max_len;
     public String title;
 
+    /**
+     * Constructor initializes the fields, and reads the corresponding files to the articleList
+     * @param user the User for which articles are stored
+     * @param fileCode "off", "bk" or "sub" based on its functionality
+     * @param title  the title to show for showing menu
+     */
     public OfflineArticles(User user, String fileCode, String title) {
         this.title = title;
         userObj = user;
@@ -27,6 +35,9 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
         articleList = (ArrayList<T>) Globals.readObjects(articleList, fileName);
     }
 
+    /**
+     * Writes the current list of articles to the file named fileName
+     */
     public void writeOffline() {
         // Write the final changes to the file
         try {
@@ -36,6 +47,9 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
         }
     }
 
+    /**
+     * Deleted the file named fileName
+     */
     public void deleteFile() {
         File file = new File(fileName);
         if (file.delete()) {
@@ -44,6 +58,10 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
             System.out.println("Not deleted");
     }
 
+    /**
+     * adds a object to the article list
+     * @param a the object to be added
+     */
     public void add(T a) {
         if (articleList.size() == max_len) {
             articleList.remove(0);
@@ -51,6 +69,10 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
         articleList.add(a);
     }
 
+    /**
+     * Deleted an object from articleLIst
+     * @param a the object to be deleted
+     */
     public void remove(T a) {
         articleList.remove(a);
     }

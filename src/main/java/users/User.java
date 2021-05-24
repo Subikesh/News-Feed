@@ -41,19 +41,32 @@ public class User implements Serializable {
         }
     }
 
+    /**
+     * Initialized the sources, bookmarks and offline with corresponding objects
+     */
     public void readOffline() {
         this.offlineNews = new OfflineArticles<>(this, "off", "Offline News");
         this.bookmarkNews = new OfflineArticles<>(this, "bk", "Bookmark News");
     }
 
+    /**
+     * Writes the changed article lists to the corresponding files
+     */
     public void writeOffline() {
         offlineNews.writeOffline();
         bookmarkNews.writeOffline();
     }
 
+    /**
+     * Deleted all the files for this user. To be done while deleting the user.
+     */
     public void deleteOffline() {
         offlineNews.deleteFile();
         bookmarkNews.deleteFile();
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername() throws IOException {
@@ -70,18 +83,20 @@ public class User implements Serializable {
         password = Globals.input.readLine();
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public void viewSubscriptions() {
         System.out.println("Here the sources set is printed");
     }
 
+    /**
+     * Shows the menu of options and list of news bookmarked
+     */
     public void viewBookmarks() {
         bookmarkNews.showMenu();
     }
 
+    /**
+     * Shows the menu of options and list of news shown offline
+     */
     public void viewOffline() {
         offlineNews.showMenu();
     }
