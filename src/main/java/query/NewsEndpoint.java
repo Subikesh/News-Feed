@@ -26,6 +26,10 @@ public enum NewsEndpoint {
         this.parameters = parameters;
     }
 
+    /**
+     * Get next enum constants. Return first element if it goes to end
+     * @return next enum constant
+     */
     public NewsEndpoint next() {
         if(ordinal() == values().length -1)
             return values()[0];

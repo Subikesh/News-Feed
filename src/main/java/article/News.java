@@ -22,6 +22,10 @@ public class News implements Article, Serializable {
     private String url;
     transient JsonObject newsJson;
 
+    /**
+     * Constructor to copy data from Json. (calls the copyFromJson())
+     * @param obj JsonObject from which data is copied
+     */
     public News(JsonObject obj) {
         newsJson = obj;
         copyFromJson(obj);

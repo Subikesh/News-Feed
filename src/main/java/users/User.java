@@ -31,7 +31,10 @@ public class User implements Serializable {
         this.password = password;
         bookmarks = new ArrayList<>();
     }
-    
+
+    /**
+     * Gets the user details from std input
+     */
     public void getInputs() {
         try {
             setUsername();
@@ -69,15 +72,26 @@ public class User implements Serializable {
         return username;
     }
 
+    /**
+     * Gets username from input
+     * @throws IOException raised when invalid input is provided
+     */
     public void setUsername() throws IOException {
         System.out.println("Enter username :");
         username = Globals.input.readLine();
     }
 
+    /**
+     * @return password of user
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Gets password from input
+     * @throws IOException raised when invalid input is provided
+     */
     public void setPassword() throws IOException {
         System.out.println("Enter password :");
         password = Globals.input.readLine();

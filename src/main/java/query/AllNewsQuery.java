@@ -7,6 +7,9 @@ import utilities.ShowsMenu;
 
 import java.io.IOException;
 
+/**
+ * Class contains query forming functions for everything news endpoint
+ */
 public class AllNewsQuery extends NewsQuery implements ShowsMenu {
     // Managing the pages of API response object
     int pageNo = 1;
@@ -16,6 +19,9 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
     // Contains the list of results fetched currently
     JsonArray resultArray;
 
+    /**
+     * Assigns the news endpoint as "everything"
+     */
     public AllNewsQuery() {
         super(NewsEndpoint.EVERYTHING);
     }

@@ -9,6 +9,9 @@ import utilities.ShowsMenu;
 
 import java.io.IOException;
 
+/**
+ * Class contains query forming functions for top-headline news endpoint
+ */
 public class TopNewsQuery extends NewsQuery implements ShowsMenu {
 
     // Managing the pages of API response object

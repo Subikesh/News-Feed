@@ -31,6 +31,13 @@ public class Globals {
         ob.close();
     }
 
+    /**
+     * Read objects from a file to a collection object
+     * @param list collection to save the file inputs
+     * @param fileName file from which input is read
+     * @param <T> Type of object to read from file
+     * @return Collection object read from the file
+     */
     @SuppressWarnings("unchecked")
     public static <T> Collection<T> readObjects(Collection<T> list, String fileName) {
         File f = new File(fileName);

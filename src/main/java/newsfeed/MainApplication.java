@@ -9,8 +9,15 @@ import query.TopNewsQuery;
 import utilities.Globals;
 import utilities.ShowsMenu;
 
+/**
+ * This class contains the main menu and redirects to various functionalities of the project.
+ */
 public class MainApplication implements ShowsMenu {
 
+    /**
+     * Perform actions for user inputs related to api calls
+     * @param option input from user
+     */
     public void generalActions(int option) {
         switch (option) {
             case 1:
@@ -32,6 +39,10 @@ public class MainApplication implements ShowsMenu {
         }
     }
 
+    /**
+     * Performs actions related to user authentication.
+     * @param option input from user
+     */
     public void userActions(int option) {
         if (Globals.SESSION.isLoggedIn()) {
             switch (option) {

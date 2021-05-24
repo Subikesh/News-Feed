@@ -17,6 +17,9 @@ public class Authentication {
     // User list is stored so in queue. If more than 15 users come, the oldest registered user is popped
     private Queue<User> registeredUsers;
 
+    /**
+     * Gets all the user's details from userFile
+     */
     public Authentication() {
         User user;
         registeredUsers = new LinkedList<>();
@@ -24,10 +27,17 @@ public class Authentication {
         registeredUsers = (Queue<User>) Globals.readObjects(registeredUsers, Globals.USER_FILE);
     }
 
+    /**
+     * @return true if user is logged in
+     */
     public boolean isLoggedIn() {
         return !currUser.equals(guestUser);
     }
 
+    /**
+     * Create a new user if the username is not already registered.
+     * Deleted the oldest registered user if total users registered goes more than MAX_USERS.
+     */
     public void register() {
         try {
             // Getting input till the user entered is not registered already
@@ -55,6 +65,10 @@ public class Authentication {
         }
     }
 
+    /**
+     * Gets user credentials as input and logs in the user if he/she is registered.
+     * @return true if user successfully logged in.
+     */
     public boolean login() {
         User user = new User();
         user.getInputs();
@@ -69,11 +83,18 @@ public class Authentication {
         return false;
     }
 
+    /**
+     * Logs in the user and read the corresponding offline news, bookmarks and store it locally
+     * @param user the user Object to be logged-in
+     */
     public void login(User user) {
         user.readOffline();
         currUser = user;
     }
 
+    /**
+     * Writes the currUser's data to the files and logs out the user
+     */
     public void logout() {
         if(currUser != guestUser) {
             System.out.println("Saving cache data...");
@@ -82,7 +103,9 @@ public class Authentication {
         }
     }
 
-    // Delete the currUser
+    /**
+     * Delete the currUser delete the files corresponding to that user
+     */
     public void deleteUser() {
         if (isLoggedIn()) {
             User temp = currUser;
@@ -91,12 +114,18 @@ public class Authentication {
         }
     }
 
-    // Delete the user passed as parameter
+    /**
+     * Delete the user passed as parameter. Deletes all the files corresponding to that user.
+     * @param user the User object to be deleted
+     */
     public void deleteUser(User user) {
         user.deleteOffline();
         registeredUsers.remove(user);
     }
 
+    /**
+     * Saves the users data to local file and logs out the user
+     */
     public void saveFiles() {
         try {
             Globals.writeObjects(Globals.SESSION.getRegisteredUsers(), Globals.USER_FILE);
@@ -106,6 +135,9 @@ public class Authentication {
         }
     }
 
+    /**
+     * @return list of registered users list
+     */
     public Queue<User> getRegisteredUsers() {
         return registeredUsers;
     }
