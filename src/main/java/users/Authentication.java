@@ -107,10 +107,16 @@ public class Authentication {
      * Delete the currUser delete the files corresponding to that user
      */
     public void deleteUser() {
-        if (isLoggedIn()) {
-            User temp = currUser;
-            logout();
-            deleteUser(temp);
+        try {
+            System.out.println("Are you sure you want to delete your account? y/n: ");
+            String inp = Globals.input.readLine();
+            if (inp.equalsIgnoreCase("y") && isLoggedIn()) {
+                User temp = currUser;
+                logout();
+                deleteUser(temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
