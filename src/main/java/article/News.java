@@ -45,7 +45,10 @@ public class News implements Article, Serializable {
         sourceName = obj.get("source").getAsJsonObject().get("name").getAsString();
         description = obj.get("description").getAsString();
         publishedAt = obj.get("publishedAt").getAsString();
-        content = obj.get("content").getAsString();
+        if(obj.get("content").isJsonNull())
+            content = null;
+        else
+            content = obj.get("content").getAsString();
         url = obj.get("url").getAsString();
     }
 
