@@ -1,6 +1,8 @@
 package article;
 
 import com.google.gson.JsonObject;
+import query.NewsQuery;
+import query.TopNewsQuery;
 import utilities.Globals;
 
 import java.awt.*;
@@ -84,12 +86,13 @@ public class Source implements Article, Serializable {
             do {
                 showDetails();
                 String menu = "\nOptions: \n" +
-                        "1. View source' website\n";
+                        "1. View source' website\n" +
+                        "2. View news from this source\n";
                 if (Globals.SESSION.isLoggedIn()) {
                     if (Globals.SESSION.currUser.subscriptions.contains(this)) {
-                        menu += "2. Remove subscriptions\n";
+                        menu += "3. Remove subscriptions\n";
                     } else {
-                        menu += "2. Subscribe to the source\n";
+                        menu += "3. Subscribe to the source\n";
                     }
                 } else {
                     menu += "(Please login to follow this source)\n";
@@ -115,6 +118,11 @@ public class Source implements Article, Serializable {
                     gotoWebsite();
                     break;
                 case 2:
+                    TopNewsQuery news = new TopNewsQuery();
+                    news.filterQuery("sources", id);
+                    news.showMenu();
+                    break;
+                case 3:
                     if(Globals.SESSION.isLoggedIn()) {
                         if (Globals.SESSION.currUser.subscriptions.contains(this)) {
                             // Remove offline news
