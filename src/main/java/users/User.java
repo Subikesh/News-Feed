@@ -1,9 +1,6 @@
 package users;
 
-import article.News;
-import article.OfflineArticles;
-import query.AllNewsQuery;
-import query.ApiQuery;
+import article.*;
 import utilities.Globals;
 
 import java.io.IOException;
@@ -17,19 +14,17 @@ import java.util.*;
 public class User implements Serializable {
     private String username;
     private String password;
-    public ArrayList<String> bookmarks;
     public transient OfflineArticles<News> offlineNews;
     public transient OfflineArticles<News> bookmarkNews;
+    public transient OfflineArticles<Source> subscriptions;
 
     public User() {
         username = null;
         password = null;
-        bookmarks = new ArrayList<>();
     }
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        bookmarks = new ArrayList<>();
     }
 
     /**
@@ -50,6 +45,7 @@ public class User implements Serializable {
     public void readOffline() {
         this.offlineNews = new OfflineArticles<>(this, "off", "Offline News");
         this.bookmarkNews = new OfflineArticles<>(this, "bk", "Bookmark News");
+        this.subscriptions = new OfflineArticles<>(this, "sub", "Subscriptions");
     }
 
     /**
@@ -58,6 +54,7 @@ public class User implements Serializable {
     public void writeOffline() {
         offlineNews.writeOffline();
         bookmarkNews.writeOffline();
+        subscriptions.writeOffline();
     }
 
     /**
@@ -66,6 +63,7 @@ public class User implements Serializable {
     public void deleteOffline() {
         offlineNews.deleteFile();
         bookmarkNews.deleteFile();
+        subscriptions.deleteFile();
     }
 
     public String getUsername() {
@@ -97,8 +95,11 @@ public class User implements Serializable {
         password = Globals.input.readLine();
     }
 
+    /**
+     * Shows the list of subscriptions and actions related to that
+     */
     public void viewSubscriptions() {
-        System.out.println("Here the sources set is printed");
+        subscriptions.showMenu();
     }
 
     /**
@@ -120,7 +121,6 @@ public class User implements Serializable {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", bookmarks=" + bookmarks +
                 '}';
     }
 

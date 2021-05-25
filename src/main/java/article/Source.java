@@ -4,11 +4,11 @@ import com.google.gson.JsonObject;
 import utilities.Globals;
 
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class Source implements Article {
+public class Source implements Article, Serializable {
     private String id;
     public String name;
     private String description;
@@ -85,16 +85,15 @@ public class Source implements Article {
                 showDetails();
                 String menu = "\nOptions: \n" +
                         "1. View source' website\n";
-                // Yet to implement
-//                if (Globals.SESSION.isLoggedIn()) {
-//                    if (Globals.SESSION.currUser.subscriptions.contains(this)) {
-//                        menu += "2. Remove subscriptions\n";
-//                    } else {
-//                        menu += "2. Subscribe to the source\n";
-//                    }
-//                } else {
-//                    menu += "(Please login to follow this source)\n";
-//                }
+                if (Globals.SESSION.isLoggedIn()) {
+                    if (Globals.SESSION.currUser.subscriptions.contains(this)) {
+                        menu += "2. Remove subscriptions\n";
+                    } else {
+                        menu += "2. Subscribe to the source\n";
+                    }
+                } else {
+                    menu += "(Please login to follow this source)\n";
+                }
 
                 menu += "\n0. Go to main menu\n" +
                         "Your option: ";
@@ -115,20 +114,20 @@ public class Source implements Article {
                 case 1:
                     gotoWebsite();
                     break;
-//                case 2:
-//                    if(Globals.SESSION.isLoggedIn()) {
-//                        if (Globals.SESSION.currUser.subscriptions.contains(this)) {
-//                            // Remove offline news
-//                            Globals.SESSION.currUser.subscriptions.remove(this);
-//                            System.out.println("Subscription removed");
-//                        } else {
-//                            // Add offline news
-//                            Globals.SESSION.currUser.subscriptions.add(this);
-//                            System.out.println("Subscription added");
-//                        }
-//                    } else
-//                        System.out.println("Invalid input. Try again...");
-//                    break;
+                case 2:
+                    if(Globals.SESSION.isLoggedIn()) {
+                        if (Globals.SESSION.currUser.subscriptions.contains(this)) {
+                            // Remove offline news
+                            Globals.SESSION.currUser.subscriptions.remove(this);
+                            System.out.println("Subscription removed");
+                        } else {
+                            // Add offline news
+                            Globals.SESSION.currUser.subscriptions.add(this);
+                            System.out.println("Subscription added");
+                        }
+                    } else
+                        System.out.println("Invalid input. Try again...");
+                    break;
                 case 0:
                     break;
                 default:

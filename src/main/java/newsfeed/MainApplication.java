@@ -95,7 +95,7 @@ public class MainApplication implements ShowsMenu {
                 StringBuilder userMenu = new StringBuilder(mainMenu);
                 userMenu.append("User (command: user)\n");
                 if(Globals.SESSION.isLoggedIn())
-                    userMenu.append("1. View / Manage Subscriptions\n" +
+                    userMenu.append("1. View Subscriptions\n" +
                             "2. View Bookmarks\n" +
                             "3. View offline news\n" +
                             "4. Delete user\n" +
