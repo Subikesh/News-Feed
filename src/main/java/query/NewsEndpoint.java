@@ -16,6 +16,9 @@ public enum NewsEndpoint {
     )),
     TOP_HEADLINES("top-headlines", new HashSet<>(
             Arrays.asList("q", "sources", "category", "language", "country", "pageSize", "page")
+    )),
+    SOURCE("sources", new HashSet<>(
+            Arrays.asList("category", "language", "country")
     ));
 
     public final String value;

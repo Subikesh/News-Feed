@@ -49,6 +49,10 @@ public class NewsQuery implements ApiQuery {
                 put("sortBy", "publishedAt");
             }};
             clearFilters();
+        } else if (endpoint.equals(NewsEndpoint.SOURCE)) {
+            // For 'source' endpoint, the query can be made without any parameters
+            defaultFilter = new HashMap<>();
+            clearFilters();
         }
     }
 
@@ -135,6 +139,9 @@ public class NewsQuery implements ApiQuery {
         if (jsonResult.get("status").getAsString().equals("error")) {
             throw new RuntimeException("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
         }
-        return jsonResult.get("articles").getAsJsonArray();
+        if (endpoint.equals(NewsEndpoint.SOURCE)) {
+            return jsonResult.get("sources").getAsJsonArray();
+        } else
+            return jsonResult.get("articles").getAsJsonArray();
     }
 }

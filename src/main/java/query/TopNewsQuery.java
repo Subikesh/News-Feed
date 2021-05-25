@@ -28,7 +28,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
         try {
             do {
                 String mainMenu = "\n\n-------------------- Top Headlines --------------------\n" +
-                        "News: (command: news)\n";
+                        "News:\n";
                 String newsString = getNewsString();
                 mainMenu += "Filters applied: " + getFilters();
                 if(newsString.isEmpty())
@@ -192,6 +192,8 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         pageNo--;
                         System.out.println("Page decremented");
                     }
+                    break;
+                case 0:
                     break;
                 default:
                     System.out.println("Invalid input! Try again...");
