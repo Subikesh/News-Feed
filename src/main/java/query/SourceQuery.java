@@ -1,8 +1,7 @@
 package query;
 
-import article.News;
+import article.Source;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import utilities.Globals;
 import utilities.ShowsMenu;
@@ -172,18 +171,12 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
      * @param option option selected by user as integer
      */
     private void sourceActions(int option) {
-//        if(option > 0 && option <= PAGE_SIZE) {
-//            JsonObject sourceObject = resultArray.get((option - 1) + (PAGE_SIZE * (pageNo-1))).getAsJsonObject();
-//            Source sourceObj = new Source(sourceObject);
-//            sourceObj.showMenu();
-//        } else {
-//            System.out.println("Invalid input! Try again...");
-//        }
-        System.out.println("Source description");
-    }
-
-    public static void main(String[] args) {
-        SourceQuery query = new SourceQuery();
-        query.showMenu();
+        if(option > 0 && option <= PAGE_SIZE) {
+            JsonObject sourceObject = resultArray.get((option - 1) + (PAGE_SIZE * (pageNo-1))).getAsJsonObject();
+            Source sourceObj = new Source(sourceObject);
+            sourceObj.showMenu();
+        } else {
+            System.out.println("Invalid input! Try again...");
+        }
     }
 }

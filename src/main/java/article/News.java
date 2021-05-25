@@ -49,9 +49,30 @@ public class News implements Article, Serializable {
         url = obj.get("url").getAsString();
     }
 
+    /**
+     * @return title of news to be shown in menus
+     */
     @Override
     public String getTitle() {
         return title;
+    }
+
+    /**
+     * Opens the url of the news article in a browser
+     */
+    @Override
+    public void gotoWebsite() {
+        if(url != null) {
+            System.out.println("Opening the url in browser...");
+            try {
+                Desktop desk = Desktop.getDesktop();
+                desk.browse(new URI(url));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                System.out.println("Invalid URL provided.");
+            }
+        }
     }
 
     @Override
@@ -97,8 +118,6 @@ public class News implements Article, Serializable {
                 option = Globals.input.readLine();
                 performAction(option);
             } while (!option.equals("0"));
-        } catch (NumberFormatException ex) {
-            System.out.println("Invalid input. Try again...");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -149,24 +168,6 @@ public class News implements Article, Serializable {
             }
         } catch (NumberFormatException exception) {
             System.out.println("Invalid input. Try again...");
-        }
-    }
-
-    /**
-     * Opens the url of the news article in a browser
-     */
-    @Override
-    public void gotoWebsite() {
-        if(url != null) {
-            System.out.println("Opening the url in browser...");
-            try {
-                Desktop desk = Desktop.getDesktop();
-                desk.browse(new URI(url));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (URISyntaxException e) {
-                System.out.println("Invalid URL provided.");
-            }
         }
     }
 }

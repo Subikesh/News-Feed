@@ -1,10 +1,12 @@
 package newsfeed;
 
+import article.Source;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 
 import query.AllNewsQuery;
+import query.SourceQuery;
 import query.TopNewsQuery;
 import utilities.Globals;
 import utilities.ShowsMenu;
@@ -27,7 +29,7 @@ public class MainApplication implements ShowsMenu {
                 new AllNewsQuery().showMenu();
                 break;
             case 3:
-                System.out.println("Showing Sources!");
+                new SourceQuery().showMenu();
                 break;
             case 4:
                 System.out.println("Redirecting to the Help markdown file.");
