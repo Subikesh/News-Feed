@@ -2,7 +2,7 @@
 /src/Ignored/
 
 # Data files
-/*.txt
+data/
 
 # Compiled class file
 *.class
