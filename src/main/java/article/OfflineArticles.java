@@ -29,7 +29,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
         this.title = title;
         userObj = user;
         this.fileCode = fileCode;
-        fileName = user.getUsername() + fileCode + ".txt";
+        fileName = "data//" + user.getUsername() + fileCode + ".txt";
         articleList = new ArrayList<>();
         max_len = 15;
         articleList = (ArrayList<T>) Globals.readObjects(articleList, fileName);

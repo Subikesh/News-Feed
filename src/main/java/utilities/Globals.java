@@ -12,7 +12,7 @@ public class Globals {
     public static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     public static final Authentication SESSION = new Authentication();
     // File names:
-    public static final String USER_FILE = "users.txt";
+    public static final String USER_FILE = "data//users.txt";
 
     /**
      * Writes a list of serializable objects to a particular file
