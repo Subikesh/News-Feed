@@ -35,7 +35,7 @@ public class NewsQuery implements ApiQuery {
     }
 
     /**
-     * Assignes corresponding endpoint to the class' field
+     * Assigns corresponding endpoint to the class' field
      * @param endpoint NewsEndpoint.EVERYTHING is passed to get advanced filtering
      *                 NewsEndpoint.TOP_HEADLINES is passed to get normal news filters (default)
      */

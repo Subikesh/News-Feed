@@ -44,9 +44,13 @@ public class Authentication {
             User user = new User();
             user.setUsername();
             // Iterates till user enters a valid username
-            while (isRegistered(user)) {
+            if(isRegistered(user)) {
                 System.out.println("Username already registered! Try another or try logging in.");
-                user.setUsername();
+                return;
+            }
+            if (!user.getUsername().matches("^[a-z][a-z_]*$")) {
+                System.out.println("Username not valid. Try again...");
+                return;
             }
             System.out.println("Username accepted");
             user.setPassword();
@@ -114,6 +118,8 @@ public class Authentication {
                 User temp = currUser;
                 logout();
                 deleteUser(temp);
+            } else {
+                System.out.println("User not deleted");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,6 +133,7 @@ public class Authentication {
     public void deleteUser(User user) {
         user.deleteOffline();
         registeredUsers.remove(user);
+        System.out.println("User deleted.");
     }
 
     /**
