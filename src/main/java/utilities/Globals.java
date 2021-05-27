@@ -54,6 +54,9 @@ public class Globals {
                 }
                 objRead.close();
             } catch (EOFException e) {
+            } catch (InvalidClassException e) {
+                System.out.println("The class structure is different than that of file. Resetting file contents.\n" +
+                        "Please register with the old username to retrieve the data.");
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

@@ -1,17 +1,21 @@
 package users;
 
 import article.*;
+import query.NewsQuery;
+import query.TopNewsQuery;
 import utilities.Globals;
+import utilities.ShowsMenu;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * User class contains the details of an user
  * This class is serialized in the Users details file.
  */
-public class User implements Serializable {
+public class User implements ShowsMenu, Serializable {
     private String username;
     private String password;
     public transient OfflineArticles<News> offlineNews;
@@ -103,6 +107,20 @@ public class User implements Serializable {
      */
     public void viewSubscriptions() {
         subscriptions.showMenu();
+    }
+
+    /**
+     * View the news from the sources that user has subscribed
+     */
+    public void viewSubNews() {
+        String sources = subscriptions.articleList.stream()
+                .map((object) -> object.id)
+                .reduce((prev, curr) -> prev + "," + curr)
+                .orElse(null);
+        TopNewsQuery news = new TopNewsQuery();
+        System.out.println(sources);
+        news.filterQuery("sources", sources);
+        news.showMenu();
     }
 
     /**

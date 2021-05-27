@@ -16,7 +16,7 @@ public interface ApiQuery {
     {{
         put("q", "^[^(=&/)]+$");
         put("qInTitle", "^[^(=&/)]+$");
-        put("sources", "^[a-z\\-]+$");
+        put("sources", "^[a-z\\-\\,]+$");
         put("category", "^[a-z]+$");
         put("country", "[a-z]{2}");
         put("domains", "^[a-z\\.\\,\\-]+$");
