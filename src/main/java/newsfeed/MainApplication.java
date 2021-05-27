@@ -49,18 +49,12 @@ public class MainApplication implements ShowsMenu {
         if (Globals.SESSION.isLoggedIn()) {
             switch (option) {
                 case 1:
-                    Globals.SESSION.currUser.viewSubscriptions();
+                    Globals.SESSION.currUser.showMenu();
                     break;
                 case 2:
-                    Globals.SESSION.currUser.viewBookmarks();
-                    break;
-                case 3:
-                    Globals.SESSION.currUser.viewOffline();
-                    break;
-                case 4:
                     Globals.SESSION.deleteUser();
                     break;
-                case 5:
+                case 3:
                     Globals.SESSION.logout();
                     break;
                 default:
@@ -95,11 +89,9 @@ public class MainApplication implements ShowsMenu {
                 StringBuilder userMenu = new StringBuilder(mainMenu);
                 userMenu.append("User (command: user)\n");
                 if(Globals.SESSION.isLoggedIn())
-                    userMenu.append("1. View Subscriptions\n" +
-                            "2. View Bookmarks\n" +
-                            "3. View offline news\n" +
-                            "4. Delete user\n" +
-                            "5. Logout\n");
+                    userMenu.append("1. View Profile\n" +
+                        "2. Delete user\n" +
+                        "3. Logout\n");
                 else
                     userMenu.append("1. Log-in\n" +
                             "2. Register\n");

@@ -66,6 +66,9 @@ public class User implements Serializable {
         subscriptions.deleteFile();
     }
 
+    /**
+     * @return username of the user
+     */
     public String getUsername() {
         return username;
     }
@@ -80,7 +83,7 @@ public class User implements Serializable {
     }
 
     /**
-     * @return password of user
+     * @return password of the user
      */
     public String getPassword() {
         return password;
@@ -117,11 +120,56 @@ public class User implements Serializable {
     }
 
     @Override
+    public void showMenu() {
+        String option;
+        try {
+            do {
+                System.out.println("\n-------------------- User Profile --------------------\n");
+                System.out.println(this);
+                System.out.println("1. View Subscriptions\n" +
+                        "2. View Bookmarks\n" +
+                        "3. View offline news\n" +
+                        "4. News from subscribed sources\n" +
+                        "\n0. Go to main menu\n" +
+                        "Your option: ");
+                option = Globals.input.readLine();
+                performAction(option);
+            } while (!option.equals("0"));
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Try again...");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void performAction(String option) throws NumberFormatException {
+        int opt = Integer.parseInt(option);
+        switch (opt) {
+            case 1:
+                viewSubscriptions();
+                break;
+            case 2:
+                viewBookmarks();
+                break;
+            case 3:
+                viewOffline();
+                break;
+            case 4:
+                System.out.println("Show news of subscriptions.");
+                viewSubNews();
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("Invalid input. Try again...");
+        }
+    }
+
+    @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "User details\n" +
+                "username : " + username + "\n";
     }
 
     @Override
