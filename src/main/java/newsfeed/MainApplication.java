@@ -81,7 +81,16 @@ public class MainApplication implements ShowsMenu {
         try {
             String option;
             do {
-                String mainMenu = "\n\n-------------------- Main Menu --------------------\n" +
+                String mainMenu = "\n-------------------- Instructions --------------------\n" +
+                        "Welcome to the news-feed application.\n" +
+                        " * Enter the numbers from the menu options to perform corresponding actions.\n" +
+                        " * For the menus with (command: xxxx) type xxxx followed by the option number\n" +
+                        " * For example: User (command: user)\n" +
+                        "\t 1. Logout\n" +
+                        "\t 2. Profile\n" +
+                        "   Type \"user 2\" to open user profile.\n" +
+                        " * To exit or go back to the previous menu press 0\n";
+                mainMenu += "\n-------------------- Main Menu --------------------\n" +
                         "1. Top Headlines\n" +
                         "2. Advanced filter options\n" +
                         "3. View news sources\n" +
