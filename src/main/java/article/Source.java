@@ -5,10 +5,7 @@ import query.NewsQuery;
 import query.TopNewsQuery;
 import utilities.Globals;
 
-import java.awt.*;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class Source implements Article, Serializable {
     public String id;
@@ -46,17 +43,7 @@ public class Source implements Article, Serializable {
 
     @Override
     public void gotoWebsite() {
-        if(url != null) {
-            System.out.println("Opening the url in browser...");
-            try {
-                Desktop desk = Desktop.getDesktop();
-                desk.browse(new URI(url));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (URISyntaxException e) {
-                System.out.println("Invalid URL provided.");
-            }
-        }
+        Globals.openWebsite(url);
     }
 
     @Override

@@ -3,11 +3,8 @@ package article;
 import com.google.gson.JsonObject;
 import utilities.Globals;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Class displays details of a single news object from a JsonObject
@@ -65,17 +62,7 @@ public class News implements Article, Serializable {
      */
     @Override
     public void gotoWebsite() {
-        if(url != null) {
-            System.out.println("Opening the url in browser...");
-            try {
-                Desktop desk = Desktop.getDesktop();
-                desk.browse(new URI(url));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (URISyntaxException e) {
-                System.out.println("Invalid URL provided.");
-            }
-        }
+        Globals.openWebsite(url);
     }
 
     @Override

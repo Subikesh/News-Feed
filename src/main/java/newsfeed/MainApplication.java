@@ -33,6 +33,7 @@ public class MainApplication implements ShowsMenu {
                 break;
             case 4:
                 System.out.println("Redirecting to the Help markdown file.");
+                Globals.openWebsite("https://github.com/Subikesh/News-Feed#readme");
                 break;
             case 0:
                 break;
@@ -94,7 +95,7 @@ public class MainApplication implements ShowsMenu {
                         "1. Top Headlines\n" +
                         "2. Advanced filter options\n" +
                         "3. View news sources\n" +
-                        "4. How to use the interface?\n\n";
+                        "4. App instructions and source code\n\n";
                 StringBuilder userMenu = new StringBuilder(mainMenu);
                 userMenu.append("User (command: user)\n");
                 if(Globals.SESSION.isLoggedIn())

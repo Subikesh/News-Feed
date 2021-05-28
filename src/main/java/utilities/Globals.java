@@ -2,7 +2,10 @@ package utilities;
 
 import users.Authentication;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 
 /**
@@ -62,6 +65,24 @@ public class Globals {
             }
         }
         return list;
+    }
+
+    /**
+     * Opens an url in browser
+     * @param url url to open
+     */
+    public static void openWebsite(String url) {
+        if(url != null) {
+            System.out.println("Opening the url in browser...");
+            try {
+                Desktop desk = Desktop.getDesktop();
+                desk.browse(new URI(url));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                System.out.println("Invalid URL provided.");
+            }
+        }
     }
 }
 
