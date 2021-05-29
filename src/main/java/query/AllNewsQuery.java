@@ -2,6 +2,7 @@ package query;
 
 import article.News;
 import com.google.gson.*;
+import utilities.DateUtilities;
 import utilities.Globals;
 import utilities.ShowsMenu;
 
@@ -55,7 +56,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     mainMenu += "11. Next Page\n";
                 if(pageNo > 1)
                     mainMenu += "12. Previous Page\n";
-                mainMenu += "\n0. Go to previous menu\nYour Option: ";
+                mainMenu += "\n0. Go back previous menu\nYour Option: ";
                 System.out.println(mainMenu);
                 option = Globals.input.readLine();
                 performAction(option);
@@ -128,8 +129,10 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     input = Globals.input.readLine();
                     if(input.equals("0"))
                         removeFilter("sources");
-                    else
+                    else {
+                        input = input.toLowerCase().replaceAll("\\s+", "");
                         filterQuery("sources", input);
+                    }
                     break;
                 case 3:
                     System.out.println("Enter the search query: \n" +
@@ -153,7 +156,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     break;
                 case 5:
                     System.out.println("Enter the domains to filter:\n" +
-                            "(A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) " +
+                            "(A comma-separated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) " +
                             "to restrict the search to)\n");
                     System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
@@ -175,23 +178,27 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     break;
                 case 7:
                     System.out.println("Enter the starting date:\n" +
-                            "(Date should of 'yyyy-mm-dd' format. Should be within 1 month before today)");
+                            "(Date should of 'yyyy-mm-dd' or 'yyyy-mm-ddTHH:mm:ss' format. Should be within 1 month within today)");
                     System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
                     if(input.equals("0"))
                         removeFilter("from");
-                    else
+                    else if (DateUtilities.isInLastMonth(input))
                         filterQuery("from", input);
+                    else
+                        System.out.println("Invalid input! Try again...");
                     break;
                 case 8:
                     System.out.println("Enter the ending date:\n" +
-                            "(Date should of 'yyyy-mm-dd' format. Should be within 1 month before today)");
+                            "(Date should of 'yyyy-mm-dd' or 'yyyy-mm-ddTHH:mm:ss' format. Should be within 1 month within today)");
                     System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
                     if(input.equals("0"))
                         removeFilter("to");
-                    else
+                    else if (DateUtilities.isInLastMonth(input))
                         filterQuery("to", input);
+                    else
+                        System.out.println("Invalid input! Try again...");
                     break;
                 case 9:
                     System.out.println("Enter the sorting attribute:\n" +
@@ -229,6 +236,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (RuntimeException ex) {
+            ex.printStackTrace();
             System.out.println("The value entered is not valid input.");
         }
     }
