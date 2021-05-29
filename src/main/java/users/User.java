@@ -148,7 +148,7 @@ public class User implements ShowsMenu, Serializable {
                         "2. View Bookmarks\n" +
                         "3. View offline news\n" +
                         "4. News from subscribed sources\n" +
-                        "\n0. Go to previous menu\n" +
+                        "\n0. Go back previous menu\n" +
                         "Your option: ");
                 option = Globals.input.readLine();
                 performAction(option);

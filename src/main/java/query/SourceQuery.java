@@ -50,7 +50,7 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
                     mainMenu += "5. Next Page\n";
                 if(pageNo > 1)
                     mainMenu += "6. Previous Page\n";
-                mainMenu +=  "\n0. Go to previous menu\n" +
+                mainMenu +=  "\n0. Go back previous menu\n" +
                         "Your Option: ";
                 System.out.println(mainMenu);
                 option = Globals.input.readLine();

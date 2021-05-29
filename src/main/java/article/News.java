@@ -102,7 +102,7 @@ public class News implements Article, Serializable {
                     menu += "(Please login to add bookmark and save news offline)\n";
                 }
 
-                menu += "\n0. Go to previous menu\n" +
+                menu += "\n0. Go back previous menu\n" +
                         "Your option: ";
                 System.out.println(menu);
                 option = Globals.input.readLine();

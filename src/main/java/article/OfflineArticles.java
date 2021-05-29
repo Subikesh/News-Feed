@@ -1,5 +1,6 @@
 package article;
 
+import utilities.FileHandling;
 import utilities.ShowsMenu;
 import users.User;
 import utilities.Globals;
@@ -32,7 +33,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
         fileName = "data//" + user.getUsername() + fileCode + ".txt";
         articleList = new ArrayList<>();
         max_len = 15;
-        articleList = (ArrayList<T>) Globals.readObjects(articleList, fileName);
+        articleList = (ArrayList<T>) FileHandling.readObjects(articleList, fileName);
     }
 
     /**
@@ -41,7 +42,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
     public void writeOffline() {
         // Write the final changes to the file
         try {
-            Globals.writeObjects(articleList, fileName);
+            FileHandling.writeObjects(articleList, fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,7 +98,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
                 for (int i = 0; i < articleList.size(); i++) {
                     System.out.println((i+1) + ". " + articleList.get(i).getTitle());
                 }
-                System.out.println("0. Go to previous menu\nYour option: ");
+                System.out.println("0. Go back previous menu\nYour option: ");
             }
             try {
                 option = Globals.input.readLine();

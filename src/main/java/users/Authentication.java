@@ -1,5 +1,6 @@
 package users;
 
+import utilities.FileHandling;
 import utilities.Globals;
 
 import java.io.*;
@@ -24,7 +25,7 @@ public class Authentication {
         User user;
         registeredUsers = new LinkedList<>();
         // Create new file if doesn't exist
-        registeredUsers = (Queue<User>) Globals.readObjects(registeredUsers, Globals.USER_FILE);
+        registeredUsers = (Queue<User>) FileHandling.readObjects(registeredUsers, Globals.USER_FILE);
     }
 
     /**
@@ -141,7 +142,7 @@ public class Authentication {
      */
     public void saveFiles() {
         try {
-            Globals.writeObjects(Globals.SESSION.getRegisteredUsers(), Globals.USER_FILE);
+            FileHandling.writeObjects(Globals.SESSION.getRegisteredUsers(), Globals.USER_FILE);
             logout();
         } catch (IOException e) {
             e.printStackTrace();

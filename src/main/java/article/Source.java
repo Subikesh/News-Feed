@@ -85,7 +85,7 @@ public class Source implements Article, Serializable {
                     menu += "(Please login to follow this source)\n";
                 }
 
-                menu += "\n0. Go to previous menu\n" +
+                menu += "\n0. Go back previous menu\n" +
                         "Your option: ";
                 System.out.println(menu);
                 option = Globals.input.readLine();

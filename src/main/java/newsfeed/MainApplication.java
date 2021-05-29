@@ -85,7 +85,7 @@ public class MainApplication implements ShowsMenu {
                 String mainMenu = "\n-------------------- Instructions --------------------\n" +
                         "Welcome to the news-feed application.\n" +
                         " * Enter the numbers from the menu options to perform corresponding actions.\n" +
-                        " * For the menus with (command: xxxx) type xxxx followed by the option number\n" +
+                        " * For the menus with (command: abcd) type abcd followed by the option number\n" +
                         " * For example: User (command: user)\n" +
                         "\t 1. Logout\n" +
                         "\t 2. Profile\n" +
