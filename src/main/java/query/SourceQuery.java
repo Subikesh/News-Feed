@@ -86,6 +86,8 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
     private String getSourceTitles() {
         StringBuilder newsString = new StringBuilder();
         resultArray = getResultJson();
+        if(resultArray == null)
+            return "--No internet connection--";
         maxPages = (int) Math.ceil((double) resultArray.size() / PAGE_SIZE);
         // Menu count
         int sourceCount = 1;

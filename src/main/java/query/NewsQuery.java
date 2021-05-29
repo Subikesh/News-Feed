@@ -110,6 +110,7 @@ public class NewsQuery implements ApiQuery {
             URL url = new URL(query);
 //            System.out.println(query);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            url.openConnection().connect();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
             if (conn.getResponseCode() != 200) {
@@ -128,14 +129,16 @@ public class NewsQuery implements ApiQuery {
 
             // Gets the jsonObject from JSON string notation
             jsonResult = new Gson().fromJson(output, JsonObject.class);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("No internet connection!");
         }
     }
 
     @Override
     public JsonArray getResultJson() throws RuntimeException {
         makeAPICall();
+        if (jsonResult == null)
+            return null;
         if (jsonResult.get("status").getAsString().equals("error")) {
             throw new RuntimeException("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
         }

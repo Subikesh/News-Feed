@@ -96,6 +96,8 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
         filterQuery("pageSize", String.valueOf(PAGE_SIZE));
         StringBuilder newsString = new StringBuilder();
         resultArray = getResultJson();
+        if(resultArray == null)
+            return "--No internet connection--";
         maxPages = (int)Math.ceil(jsonResult.get("totalResults").getAsDouble()/PAGE_SIZE);
         int newsCount = 1;
         for (JsonElement news : resultArray) {
