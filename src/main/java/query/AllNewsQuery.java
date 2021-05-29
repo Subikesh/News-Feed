@@ -55,8 +55,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     mainMenu += "11. Next Page\n";
                 if(pageNo > 1)
                     mainMenu += "12. Previous Page\n";
-                mainMenu +=  "\n0. Go to main menu\n" +
-                        "Your Option: ";
+                mainMenu += "\n0. Go to previous menu\nYour Option: ";
                 System.out.println(mainMenu);
                 option = Globals.input.readLine();
                 performAction(option);
@@ -93,6 +92,8 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
         filterQuery("pageSize", String.valueOf(PAGE_SIZE));
         StringBuilder newsString = new StringBuilder();
         resultArray = getResultJson();
+        if(resultArray == null)
+            return "--No internet connection--";
         maxPages = (int)Math.ceil(jsonResult.get("totalResults").getAsDouble()/PAGE_SIZE);
         int newsCount = 1;
         for (JsonElement news : resultArray) {

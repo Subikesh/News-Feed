@@ -97,7 +97,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
                 for (int i = 0; i < articleList.size(); i++) {
                     System.out.println((i+1) + ". " + articleList.get(i).getTitle());
                 }
-                System.out.println("0. Go to main menu\nYour option: ");
+                System.out.println("0. Go to previous menu\nYour option: ");
             }
             try {
                 option = Globals.input.readLine();

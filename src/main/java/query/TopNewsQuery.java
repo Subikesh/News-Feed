@@ -58,7 +58,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                     mainMenu += "7. Next Page\n";
                 if(pageNo > 1)
                     mainMenu += "8. Previous Page\n";
-                mainMenu +=  "\n0. Go to main menu\n" +
+                mainMenu +=  "\n0. Go to previous menu\n" +
                         "Your Option: ";
                 System.out.println(mainMenu);
                 option = Globals.input.readLine();
@@ -152,7 +152,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         break;
                     }
                     System.out.println("Enter the source' id:\n" +
-                            "(Complete list of sources can from view sources in main page)");
+                            "(Comma separated sources list. Complete list of sources can be viewed from main page)");
                     System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
                     if(input.equals("0"))
