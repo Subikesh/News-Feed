@@ -7,10 +7,10 @@ import utilities.Globals;
 import utilities.ShowsMenu;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+/**
+ * Class contains query forming methods to request and return source objects
+ */
 public class SourceQuery extends NewsQuery implements ShowsMenu {
 
     // Managing the pages of API response object

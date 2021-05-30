@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * Class contains the static methods to format/parse dates
+ */
 public class DateUtilities {
     /**
      * Checks if the date entered as String is a valid date or not in yyyy/MM/dd format
@@ -37,6 +40,11 @@ public class DateUtilities {
         return true;
     }
 
+    /**
+     * Checks if the date entered is within the last 30 days.
+     * @param date the date to check in string
+     * @return true if the date is within last month from today
+     */
     public static boolean isInLastMonth(String date) {
         if (!isValidDate(date)) {
             return false;

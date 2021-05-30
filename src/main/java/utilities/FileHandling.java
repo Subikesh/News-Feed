@@ -3,6 +3,9 @@ package utilities;
 import java.io.*;
 import java.util.Collection;
 
+/**
+ * Contains static methods used to handle reading and writing objects to and from files
+ */
 public class FileHandling {
     /**
      * Writes a list of serializable objects to a particular file
