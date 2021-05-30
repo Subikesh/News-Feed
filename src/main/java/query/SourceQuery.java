@@ -44,7 +44,7 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
                     }
                 } else
                     sourceTitles = getSourceTitles();
-                mainMenu += "Filters applied: " + getFilters();
+                mainMenu += showFilters();
                 if(sourceTitles.isEmpty())
                     mainMenu += "\n-- No sources found for this filters. Generalize filters to view more sources. --\n";
                 else

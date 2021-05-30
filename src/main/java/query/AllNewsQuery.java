@@ -35,7 +35,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                 String mainMenu = "\n\n-------------------- Top Headlines --------------------\n" +
                         "News:\n";
                 String newsString = getNewsString();
-                mainMenu += "Filters applied: " + getFilters();
+                mainMenu += showFilters();
                 if(newsString.isEmpty())
                     mainMenu += "\n-- No news found for this filters. Generalize filters to view more news. --\n";
                 else

@@ -4,6 +4,7 @@ import article.Article;
 import org.jetbrains.annotations.NotNull;
 import com.google.gson.*;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -58,6 +59,22 @@ public class NewsQuery implements ApiQuery {
 
     public Map<String, String> getFilters() {
         return filterMap;
+    }
+
+    public String showFilters() {
+        if (filterMap.size() == 0) {
+            return "--No filters applied--";
+        }
+        String filterString = "Filters: ";
+        StringBuilder filterBuilder = new StringBuilder(filterString);
+        for (String key : filterMap.keySet()) {
+            try {
+                filterBuilder.append(key).append(" : ").append(URLDecoder
+                        .decode(filterMap.get(key), StandardCharsets.UTF_8.name())).append(", ");
+            } catch (UnsupportedEncodingException e) {}
+        }
+        filterBuilder.deleteCharAt(filterBuilder.length()-2);
+        return filterBuilder.toString();
     }
 
     @Override
