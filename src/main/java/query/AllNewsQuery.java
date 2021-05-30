@@ -126,11 +126,13 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     break;
                 case 2:
                     System.out.println("Enter the source' id:\n" +
-                            "(Complete list of sources can from view sources in main page)");
+                            "(Enter comma separated sources list for multiple sources. Press 1 to view complete list of sources)");
                     System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
                     if(input.equals("0"))
                         removeFilter("sources");
+                    else if(input.equals("1"))
+                        new SourceQuery().showMenu();
                     else {
                         input = input.toLowerCase().replaceAll("\\s+", "");
                         filterQuery("sources", input);

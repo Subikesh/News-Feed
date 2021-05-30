@@ -153,13 +153,15 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         System.out.println("Try applying this filter after removing country or category filter.\n");
                         break;
                     }
-                    System.out.println("Enter the source' id:\n" +
-                            "(Comma separated sources list. Complete list of sources can be viewed from main page)");
+                    System.out.println("Enter the sources' ids:\n" +
+                            "(Enter comma separated sources list for multiple sources. Press 1 to view complete list of sources)");
                     System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
                     input = input.toLowerCase().replaceAll("\\s+", "");
                     if(input.equals("0"))
                         removeFilter("sources");
+                    else if(input.equals("1"))
+                        new SourceQuery().showMenu();
                     else
                         filterQuery("sources", input);
                     break;
