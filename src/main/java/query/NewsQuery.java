@@ -131,7 +131,7 @@ public class NewsQuery implements ApiQuery {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
+                throw new Error("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -157,7 +157,7 @@ public class NewsQuery implements ApiQuery {
         if (jsonResult == null)
             return null;
         if (jsonResult.get("status").getAsString().equals("error")) {
-            throw new RuntimeException("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
+            throw new Error("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
         }
         if (endpoint.equals(NewsEndpoint.SOURCE)) {
             return jsonResult.get("sources").getAsJsonArray();
