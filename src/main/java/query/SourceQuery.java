@@ -38,8 +38,10 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
                         "Source ids:\n";
                 if(option != null) {
                     String[] prevOption = option.split("\\s+");
-                    if (prevOption.length != 2 || !(prevOption[1].equals("5") || prevOption[1].equals("6")))
+                    if (prevOption.length != 2 || !(prevOption[1].equals("5") || prevOption[1].equals("6"))) {
+                        pageNo = 1;
                         sourceTitles = getSourceTitles();
+                    }
                 } else
                     sourceTitles = getSourceTitles();
                 mainMenu += "Filters applied: " + getFilters();

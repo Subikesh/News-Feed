@@ -109,7 +109,7 @@ public class MainApplication implements ShowsMenu {
                 System.out.println(mainMenu + "Your option: ");
                 option = Globals.input.readLine();
                 performAction(option);
-            } while(!(option.charAt(0) == '0'));
+            } while(option.isEmpty() || !(option.charAt(0) == '0'));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

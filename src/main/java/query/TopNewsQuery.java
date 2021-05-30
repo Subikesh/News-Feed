@@ -114,6 +114,8 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
     private void filterActions(int option) {
         String input;
         try {
+            if (option != 7 && option != 8)
+                pageNo = 1;
             switch (option) {
                 case 1:
                     if(getFilters().containsKey("sources")) {

@@ -111,6 +111,8 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
     private void filterActions(int option) {
         String input;
         try {
+            if (option != 11 && option != 12)
+                pageNo = 1;
             switch (option) {
                 case 1:
                     System.out.println("Possible language options: ar, de, en, es, fr, he, it, nl, no, pt, ru, se, " +
