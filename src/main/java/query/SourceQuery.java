@@ -8,6 +8,7 @@ import utilities.ShowsMenu;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SourceQuery extends NewsQuery implements ShowsMenu {
@@ -29,12 +30,18 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
 
     @Override
     public void showMenu() {
-        String option;
+        String option = null;
+        String sourceTitles = "";
         try {
             do {
                 String mainMenu = "\n\n-------------------- Sources --------------------\n" +
                         "Source ids:\n";
-                String sourceTitles = getSourceTitles();
+                if(option != null) {
+                    String[] prevOption = option.split("\\s+");
+                    if (prevOption.length != 2 || !(prevOption[1].equals("5") || prevOption[1].equals("6")))
+                        sourceTitles = getSourceTitles();
+                } else
+                    sourceTitles = getSourceTitles();
                 mainMenu += "Filters applied: " + getFilters();
                 if(sourceTitles.isEmpty())
                     mainMenu += "\n-- No sources found for this filters. Generalize filters to view more sources. --\n";
@@ -106,6 +113,9 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
     private void filterActions(int option) {
         String input;
         try {
+            if (option != 5 && option != 6) {
+                removeFilter("page");
+            }
             switch (option) {
                 case 1:
                     System.out.println("Category options are: business, entertainment, general, health, science, \n" +

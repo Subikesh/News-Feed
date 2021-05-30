@@ -61,7 +61,7 @@ public class NewsQuery implements ApiQuery {
     }
 
     @Override
-    public void filterQuery(@NotNull String name, @NotNull String value) throws RuntimeException{
+    public void filterQuery(@NotNull String name, @NotNull String value) throws RuntimeException {
         // Validating name and value
         if(!endpoint.parameters.contains(name)) {
             throw new RuntimeException("Invalid parameter for " + endpoint.value + " endpoint.");
