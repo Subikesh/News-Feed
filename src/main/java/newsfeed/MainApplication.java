@@ -112,6 +112,8 @@ public class MainApplication implements ShowsMenu {
             } while(option.isEmpty() || !(option.charAt(0) == '0'));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No input received.");
         } finally {
             Globals.SESSION.saveFiles();
             System.out.println("Thank you for using the application");

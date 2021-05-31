@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import utilities.Globals;
 import utilities.ShowsMenu;
 
+import javax.naming.MalformedLinkException;
 import java.io.IOException;
 
 /**
@@ -67,6 +68,8 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
             } while(!(option.equals("0")) && ((option.split("\\s+").length == 1) || !(option.split("\\s+")[1].equals("0"))));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No input received.");
         }
     }
 
@@ -94,16 +97,23 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
      */
     private String getSourceTitles() {
         StringBuilder newsString = new StringBuilder();
-        resultArray = getResultJson();
-        if(resultArray == null)
-            return "--No internet connection--";
-        maxPages = (int) Math.ceil((double) resultArray.size() / PAGE_SIZE);
-        // Menu count
-        int sourceCount = 1;
-        for (int i = (pageNo-1) * PAGE_SIZE; i < resultArray.size() && i < (pageNo * PAGE_SIZE); i++) {
-            JsonObject source = resultArray.get(i).getAsJsonObject();
-            newsString.append(sourceCount++).append(". ");
-            newsString.append(source.get("id").getAsString()).append("\n");
+        try {
+            resultArray = getResultJson();
+            if(resultArray == null)
+                return "--No internet connection--";
+            maxPages = (int) Math.ceil((double) resultArray.size() / PAGE_SIZE);
+            // Menu count
+            int sourceCount = 1;
+            for (int i = (pageNo-1) * PAGE_SIZE; i < resultArray.size() && i < (pageNo * PAGE_SIZE); i++) {
+                JsonObject source = resultArray.get(i).getAsJsonObject();
+                newsString.append(sourceCount++).append(". ");
+                newsString.append(source.get("id").getAsString()).append("\n");
+            }
+        } catch (MalformedLinkException e) {
+            System.out.println("API call returns failed response.\n" +
+                    "Resetting all filters applied...");
+            clearFilters();
+            return getSourceTitles();
         }
         return newsString.toString();
     }

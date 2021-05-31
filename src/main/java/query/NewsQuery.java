@@ -4,6 +4,7 @@ import article.Article;
 import org.jetbrains.annotations.NotNull;
 import com.google.gson.*;
 
+import javax.naming.MalformedLinkException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -131,7 +132,7 @@ public class NewsQuery implements ApiQuery {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
             if (conn.getResponseCode() != 200) {
-                throw new Error("Failed : HTTP error code : "
+                throw new MalformedLinkException("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -148,16 +149,20 @@ public class NewsQuery implements ApiQuery {
             jsonResult = new Gson().fromJson(output, JsonObject.class);
         } catch (IOException e) {
             System.out.println("No internet connection!");
+        } catch (MalformedLinkException e) {
+            System.out.println("URL for API call is not valid.\n" +
+                    "Resetting all filters applied...");
+            clearFilters();
         }
     }
 
     @Override
-    public JsonArray getResultJson() throws RuntimeException {
+    public JsonArray getResultJson() throws MalformedLinkException {
         makeAPICall();
         if (jsonResult == null)
             return null;
         if (jsonResult.get("status").getAsString().equals("error")) {
-            throw new Error("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
+            throw new MalformedLinkException("Code: " + jsonResult.get("code") + "\n Message: "+ jsonResult.get("message"));
         }
         if (endpoint.equals(NewsEndpoint.SOURCE)) {
             return jsonResult.get("sources").getAsJsonArray();

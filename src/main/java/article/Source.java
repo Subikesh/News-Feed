@@ -93,6 +93,8 @@ public class Source implements Article, Serializable {
             } while (!option.equals("0"));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No input received.");
         }
     }
 

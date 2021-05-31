@@ -4,6 +4,8 @@ import java.util.*;
 import article.*;
 import com.google.gson.JsonArray;
 
+import javax.naming.MalformedLinkException;
+
 /**
  * Interface contains the methods for creating, editing, and making API calls to newsAPI
  */
@@ -62,5 +64,5 @@ public interface ApiQuery {
      * Get the result of the filters in JSON array format
      * @return a JSON Array object of news results
      */
-    JsonArray getResultJson();
+    JsonArray getResultJson() throws MalformedLinkException;
 }

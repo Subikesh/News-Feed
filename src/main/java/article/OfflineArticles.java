@@ -89,24 +89,29 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
     @Override
     public void showMenu() {
         String option = "0";
-        do {
-            System.out.println("-------------------- "+ title + " --------------------");
-            if (articleList.size() == 0) {
-                System.out.println("---No articles to display here---");
-                break;
-            } else {
-                for (int i = 0; i < articleList.size(); i++) {
-                    System.out.println((i+1) + ". " + articleList.get(i).getTitle());
+        try {
+            do {
+                System.out.println("-------------------- "+ title + " --------------------");
+                if (articleList.size() == 0) {
+                    System.out.println("---No articles to display here---");
+                    break;
+                } else {
+                    for (int i = 0; i < articleList.size(); i++) {
+                        System.out.println((i+1) + ". " + articleList.get(i).getTitle());
+                    }
+                    System.out.println("0. Go back previous menu\nYour option: ");
                 }
-                System.out.println("0. Go back previous menu\nYour option: ");
-            }
-            try {
-                option = Globals.input.readLine();
-                performAction(option);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } while (!option.equals("0"));
+                try {
+                    option = Globals.input.readLine();
+                    performAction(option);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } while (!option.equals("0"));
+        } catch (NullPointerException e) {
+            System.out.println("No input received.");
+
+        }
     }
 
     @Override

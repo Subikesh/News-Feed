@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import utilities.Globals;
 import utilities.ShowsMenu;
 
+import javax.naming.MalformedLinkException;
 import java.io.IOException;
 
 /**
@@ -31,13 +32,13 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                         "News:\n";
                 String newsString = getNewsString();
                 mainMenu += showFilters();
-                if(newsString.isEmpty())
+                if (newsString.isEmpty())
                     mainMenu += "\n-- No news found for this filters. Generalize filters to view more news. --\n";
                 else
-                    mainMenu += "\t\t\tPage no: " + pageNo +"/" + maxPages + "\n";
-                    mainMenu += newsString;
+                    mainMenu += "\t\t\tPage no: " + pageNo + "/" + maxPages + "\n";
+                mainMenu += newsString;
                 mainMenu += "\nFilters: (command: filter)\n";
-                if(getFilters().containsKey("sources")) {
+                if (getFilters().containsKey("sources")) {
                     mainMenu += "(You cannot apply country and category when sources filter is applied.)\n";
                     mainMenu += "\t1. Country\n" +
                             "\t2. Category\n";
@@ -45,7 +46,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                     mainMenu += "1. Country\n" +
                             "2. Category\n";
                 }
-                if(getFilters().containsKey("country") || getFilters().containsKey("category")) {
+                if (getFilters().containsKey("country") || getFilters().containsKey("category")) {
                     mainMenu += "(You cannot combine sources filter when country or category filters are applied.)\n";
                     mainMenu += "\t3. Sources\n";
                 } else {
@@ -54,18 +55,20 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                 mainMenu += "4. Search\n" +
                         "5. Language\n" +
                         "6. Clear filters\n";
-                if(pageNo < maxPages)
+                if (pageNo < maxPages)
                     mainMenu += "7. Next Page\n";
-                if(pageNo > 1)
+                if (pageNo > 1)
                     mainMenu += "8. Previous Page\n";
-                mainMenu +=  "\n0. Go back previous menu\n" +
+                mainMenu += "\n0. Go back previous menu\n" +
                         "Your Option: ";
                 System.out.println(mainMenu);
                 option = Globals.input.readLine();
                 performAction(option);
-            } while(!(option.equals("0")) && ((option.split("\\s+").length == 1) || !(option.split("\\s+")[1].equals("0"))));
+            } while (!(option.equals("0")) && ((option.split("\\s+").length == 1) || !(option.split("\\s+")[1].equals("0"))));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No input received.");
         }
     }
 
@@ -95,14 +98,21 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
         filterQuery("page", String.valueOf(pageNo));
         filterQuery("pageSize", String.valueOf(PAGE_SIZE));
         StringBuilder newsString = new StringBuilder();
-        resultArray = getResultJson();
-        if(resultArray == null)
-            return "--No internet connection--";
-        maxPages = (int)Math.ceil(jsonResult.get("totalResults").getAsDouble()/PAGE_SIZE);
-        int newsCount = 1;
-        for (JsonElement news : resultArray) {
-            newsString.append(newsCount++).append(". ");
-            newsString.append(news.getAsJsonObject().get("title").getAsString()).append("\n");
+        try {
+            resultArray = getResultJson();
+            if(resultArray == null)
+                return "--No internet connection--";
+            maxPages = (int)Math.ceil(jsonResult.get("totalResults").getAsDouble()/PAGE_SIZE);
+            int newsCount = 1;
+            for (JsonElement news : resultArray) {
+                newsString.append(newsCount++).append(". ");
+                newsString.append(news.getAsJsonObject().get("title").getAsString()).append("\n");
+            }
+        } catch (MalformedLinkException e) {
+            System.out.println("API call returns failed response.\n" +
+                    "Resetting all filters applied...");
+            clearFilters();
+            return getNewsString();
         }
         return newsString.toString();
     }

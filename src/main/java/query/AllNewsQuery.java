@@ -6,6 +6,7 @@ import utilities.DateUtilities;
 import utilities.Globals;
 import utilities.ShowsMenu;
 
+import javax.naming.MalformedLinkException;
 import java.io.IOException;
 
 /**
@@ -63,6 +64,8 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
             } while(!(option.equals("0")) && ((option.split("\\s+").length == 1) || !(option.split("\\s+")[1].equals("0"))));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No input received.");
         }
     }
 
@@ -92,14 +95,21 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
         filterQuery("page", String.valueOf(pageNo));
         filterQuery("pageSize", String.valueOf(PAGE_SIZE));
         StringBuilder newsString = new StringBuilder();
-        resultArray = getResultJson();
-        if(resultArray == null)
-            return "--No internet connection--";
-        maxPages = (int)Math.ceil(jsonResult.get("totalResults").getAsDouble()/PAGE_SIZE);
-        int newsCount = 1;
-        for (JsonElement news : resultArray) {
-            newsString.append(newsCount++).append(". ");
-            newsString.append(news.getAsJsonObject().get("title").getAsString()).append("\n");
+        try {
+            resultArray = getResultJson();
+            if(resultArray == null)
+                return "--No internet connection--";
+            maxPages = (int)Math.ceil(jsonResult.get("totalResults").getAsDouble()/PAGE_SIZE);
+            int newsCount = 1;
+            for (JsonElement news : resultArray) {
+                newsString.append(newsCount++).append(". ");
+                newsString.append(news.getAsJsonObject().get("title").getAsString()).append("\n");
+            }
+        } catch (MalformedLinkException e) {
+            System.out.println("API call returns failed response.\n" +
+                    "Resetting all filters applied...");
+            clearFilters();
+            return getNewsString();
         }
         return newsString.toString();
     }

@@ -151,12 +151,16 @@ public class User implements ShowsMenu, Serializable {
                         "\n0. Go back previous menu\n" +
                         "Your option: ");
                 option = Globals.input.readLine();
-                performAction(option);
+                try {
+                    performAction(option);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Try again...");
+                }
             } while (!option.equals("0"));
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Try again...");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No input received.");
         }
     }
 
