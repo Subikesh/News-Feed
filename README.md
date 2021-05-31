@@ -2,7 +2,9 @@
 A java console application to view and follow everyday news.
 Start the application by running [NewsFeedApplication](src/main/java/newsfeed/NewsFeedApplication.java).
 
-The java documentation for news-feed application - [Documentation](https://subikesh.github.io/News-Feed/)
+The java documentation for news-feed application - [Documentation](https://subikesh.github.io/News-Feed/). 
+
+This application uses API calls from [newsapi.org](https://newsapi.org/). View API documentation [here](https://newsapi.org/docs/get-started).
 
 ## Application features
 
