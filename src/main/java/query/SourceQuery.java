@@ -41,8 +41,8 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
                     String[] prevOption = option.split("\\s+");
                     if (prevOption.length != 2 || !(prevOption[1].equals("5") || prevOption[1].equals("6"))) {
                         pageNo = 1;
-                        sourceTitles = getSourceTitles();
                     }
+                    sourceTitles = getSourceTitles();
                 } else
                     sourceTitles = getSourceTitles();
                 mainMenu += showFilters();
