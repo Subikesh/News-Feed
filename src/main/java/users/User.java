@@ -82,8 +82,13 @@ public class User implements ShowsMenu, Serializable {
      * @throws IOException raised when invalid input is provided
      */
     public void setUsername() throws IOException {
-        System.out.println("Enter username :");
-        username = Globals.input.readLine();
+        do {
+            System.out.println("Enter username :");
+            username = Globals.input.readLine();
+            if (username.isEmpty()) {
+                System.out.println("Invalid username.");
+            }
+        } while (username.isEmpty());
     }
 
     /**
@@ -98,8 +103,13 @@ public class User implements ShowsMenu, Serializable {
      * @throws IOException raised when invalid input is provided
      */
     public void setPassword() throws IOException {
-        System.out.println("Enter password :");
-        password = Globals.input.readLine();
+        do {
+            System.out.println("Enter password :");
+            password = Globals.input.readLine();
+            if (password.isEmpty()) {
+                System.out.println("Invalid password.");
+            }
+        } while (password.isEmpty());
     }
 
     /**
