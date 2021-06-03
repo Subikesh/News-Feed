@@ -136,7 +136,8 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     break;
                 case 2:
                     System.out.println("Enter the source' id:\n" +
-                            "(Enter comma separated sources list for multiple source filters. Press 1 to view complete list of sources)");
+                            "(Press 1 to view complete list of sources. Enter comma separated sources list for multiple source filters)" +
+                            "\nSample source ids - abc-news, bbc, espn, the-hindu, etc");
                     System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
                     if(input.equals("0"))
