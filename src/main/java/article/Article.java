@@ -28,4 +28,12 @@ public interface Article extends ShowsMenu {
      * @return title of the article as shown in menus
      */
     String getTitle();
+
+    /**
+     * Compares two articles
+     * @return hashcode of object
+     */
+    int hashCode();
+
+    boolean equals(Object o);
 }

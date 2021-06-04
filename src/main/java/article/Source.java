@@ -135,4 +135,24 @@ public class Source implements Article, Serializable {
             System.out.println("Invalid input. Try again...");
         }
     }
+
+    /**
+     * Compares two source objects with source-id
+     * @param o the object to compare
+     * @return true if both objects are same
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Source source = (Source) o;
+
+        return id.equals(source.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

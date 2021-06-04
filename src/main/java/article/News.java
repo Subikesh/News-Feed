@@ -162,4 +162,26 @@ public class News implements Article, Serializable {
             System.out.println("Invalid input. Try again...");
         }
     }
+
+    /**
+     * Compares two news with title, author and url
+     * @param o object to compare
+     * @return true if both objects are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        News news = (News) o;
+
+        if (!author.equals(news.author)) return false;
+        if (!title.equals(news.title)) return false;
+        return url.equals(news.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
