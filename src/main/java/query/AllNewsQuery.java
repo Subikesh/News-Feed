@@ -137,7 +137,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                 case 2:
                     System.out.println("Enter the source' id:\n" +
                             "(Press 1 to view complete list of sources. Enter comma separated sources list for multiple source filters)" +
-                            "\nSample source ids - abc-news, bbc, espn, the-hindu, etc");
+                            "\nSample source ids - abc-news, bbc-news, espn, the-hindu, etc");
                     System.out.println("Press 0 to reset filter: ");
                     input = Globals.input.readLine();
                     if(input.equals("0"))
@@ -251,8 +251,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
-            System.out.println("The value entered is not valid input.");
+            System.out.println(ex.getMessage());
         }
     }
 

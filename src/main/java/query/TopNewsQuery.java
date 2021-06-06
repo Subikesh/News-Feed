@@ -165,7 +165,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
                     }
                     System.out.println("Enter the sources' ids:\n" +
                             "(Press 1 to view complete list of sources. Enter comma separated sources list for multiple source filters)" +
-                            "\nSample source ids - abc-news, bbc, espn, the-hindu, etc");
+                            "\nSample source ids - abc-news, bbc-news, espn, the-hindu, etc");
                     System.out.println("Press 0 to reset filter");
                     input = Globals.input.readLine();
                     input = input.toLowerCase().replaceAll("\\s+", "");

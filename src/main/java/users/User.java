@@ -123,14 +123,19 @@ public class User implements ShowsMenu, Serializable {
      * View the news from the sources that user has subscribed
      */
     public void viewSubNews() {
+        System.out.println("Showing top headlines of subscribed sources ");
         String sources = subscriptions.articleList.stream()
                 .map((object) -> object.id)
                 .reduce((prev, curr) -> prev + "," + curr)
                 .orElse(null);
-        TopNewsQuery news = new TopNewsQuery();
-        System.out.println(sources);
-        news.filterQuery("sources", sources);
-        news.showMenu();
+        if (sources == null) {
+            System.out.println("--No sources subscribed--");
+        } else {
+            TopNewsQuery news = new TopNewsQuery();
+            System.out.println(sources);
+            news.filterQuery("sources", sources);
+            news.showMenu();
+        }
     }
 
     /**
@@ -157,7 +162,7 @@ public class User implements ShowsMenu, Serializable {
                 System.out.println("1. View Subscriptions\n" +
                         "2. View Bookmarks\n" +
                         "3. View offline news\n" +
-                        "4. News from subscribed sources\n" +
+                        "4. Top news from subscribed sources\n" +
                         "\n0. Go back previous menu\n" +
                         "Your option: ");
                 option = Globals.input.readLine();
@@ -188,7 +193,6 @@ public class User implements ShowsMenu, Serializable {
                 viewOffline();
                 break;
             case 4:
-                System.out.println("Show news of subscriptions.");
                 viewSubNews();
                 break;
             case 0:
