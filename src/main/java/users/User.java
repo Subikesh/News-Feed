@@ -209,7 +209,8 @@ public class User implements ShowsMenu, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return username.equals(user.username);
+
+        return Objects.equals(username, user.username);
     }
 
     @Override

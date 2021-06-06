@@ -6,6 +6,7 @@ import query.TopNewsQuery;
 import utilities.Globals;
 
 import java.io.*;
+import java.util.Objects;
 
 public class Source implements Article, Serializable {
     public String id;
@@ -74,7 +75,7 @@ public class Source implements Article, Serializable {
                 showDetails();
                 String menu = "\nOptions: \n" +
                         "1. View source' website\n" +
-                        "2. View news from this source\n";
+                        "2. View top news from this source\n";
                 if (Globals.SESSION.isLoggedIn()) {
                     if (Globals.SESSION.currUser.subscriptions.contains(this)) {
                         menu += "3. Remove subscriptions\n";
@@ -148,11 +149,11 @@ public class Source implements Article, Serializable {
 
         Source source = (Source) o;
 
-        return id.equals(source.id);
+        return Objects.equals(id, source.id);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 }

@@ -5,6 +5,7 @@ import utilities.Globals;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Class displays details of a single news object from a JsonObject
@@ -175,13 +176,16 @@ public class News implements Article, Serializable {
 
         News news = (News) o;
 
-        if (!author.equals(news.author)) return false;
-        if (!title.equals(news.title)) return false;
-        return url.equals(news.url);
+        if (!Objects.equals(author, news.author)) return false;
+        if (!Objects.equals(title, news.title)) return false;
+        return Objects.equals(url, news.url);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int result = author != null ? author.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
     }
 }

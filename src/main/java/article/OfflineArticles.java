@@ -79,7 +79,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
     }
 
     public boolean contains(T a) {
-        return articleList.contains(a);
+        return articleList != null && articleList.contains(a);
     }
 
     /**
