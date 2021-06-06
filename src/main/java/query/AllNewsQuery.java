@@ -73,15 +73,15 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
     public void performAction(String option) {
         String[] action = option.split("\\s+");
         try {
-            if(action[0].equals("0"));
-            else if(action[0].equalsIgnoreCase("filter")) {
+            if (action[0].equals("0")) ;
+            else if (action[0].equalsIgnoreCase("filter")) {
                 filterActions(Integer.parseInt(action[1]));
-            } else if(action[0].equalsIgnoreCase("news")) {
+            } else if (action[0].equalsIgnoreCase("news")) {
                 newsActions(Integer.parseInt(action[1]));
             } else {
                 newsActions(Integer.parseInt(option));
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Illegal input. Try again...");
         }
     }

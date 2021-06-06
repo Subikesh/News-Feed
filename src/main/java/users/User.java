@@ -163,7 +163,7 @@ public class User implements ShowsMenu, Serializable {
                 option = Globals.input.readLine();
                 try {
                     performAction(option);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     System.out.println("Invalid input. Try again...");
                 }
             } while (!option.equals("0"));

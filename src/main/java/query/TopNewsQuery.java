@@ -84,7 +84,7 @@ public class TopNewsQuery extends NewsQuery implements ShowsMenu {
             } else {
                 newsActions(Integer.parseInt(option));
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Illegal input. Try again...");
         }
     }

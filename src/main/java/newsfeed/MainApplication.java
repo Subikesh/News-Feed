@@ -130,7 +130,7 @@ public class MainApplication implements ShowsMenu {
                 userActions(Integer.parseInt(action[1]));
             else
                 generalActions(Integer.parseInt(option));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Illegal input. Try again...");
         }
     }

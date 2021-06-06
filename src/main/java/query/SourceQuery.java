@@ -85,7 +85,7 @@ public class SourceQuery extends NewsQuery implements ShowsMenu {
             } else {
                 sourceActions(Integer.parseInt(option));
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Illegal input. Try again...");
         }
     }

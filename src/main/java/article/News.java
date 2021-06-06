@@ -158,7 +158,7 @@ public class News implements Article, Serializable {
                     System.out.println("Invalid input. Try again...");
                     break;
             }
-        } catch (NumberFormatException exception) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception) {
             System.out.println("Invalid input. Try again...");
         }
     }

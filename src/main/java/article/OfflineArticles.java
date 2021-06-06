@@ -123,7 +123,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
             } else if(opt != 0){
                 articleList.get(opt-1).showMenu();
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid input. Try again...");
         }
 
