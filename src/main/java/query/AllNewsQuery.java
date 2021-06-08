@@ -198,7 +198,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     input = Globals.input.readLine();
                     if(input.equals("0"))
                         removeFilter("from");
-                    else if (DateUtilities.isInLastMonth(input))
+                    else if (DateUtilities.isInLast30Days(input))
                         filterQuery("from", input);
                     else
                         System.out.println("Invalid input! Try again...");
@@ -210,7 +210,7 @@ public class AllNewsQuery extends NewsQuery implements ShowsMenu {
                     input = Globals.input.readLine();
                     if(input.equals("0"))
                         removeFilter("to");
-                    else if (DateUtilities.isInLastMonth(input))
+                    else if (DateUtilities.isInLast30Days(input))
                         filterQuery("to", input);
                     else
                         System.out.println("Invalid input! Try again...");

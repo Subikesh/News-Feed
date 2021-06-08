@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.Objects;
 
 public class Source implements Article, Serializable {
-    public String id;
+    private String id;
     public String name;
     private String description;
     private String language;
@@ -64,6 +64,10 @@ public class Source implements Article, Serializable {
      */
     @Override
     public String getTitle() {
+        return id;
+    }
+
+    public String getId() {
         return id;
     }
 
@@ -144,9 +148,7 @@ public class Source implements Article, Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (getClass() != o.getClass()) return false;
         Source source = (Source) o;
 
         return Objects.equals(id, source.id);

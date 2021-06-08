@@ -11,8 +11,8 @@ import java.util.Objects;
  * Class displays details of a single news object from a JsonObject
  */
 public class News implements Article, Serializable {
-    private String author;
     public String title;
+    private String author;
     private String sourceName;
     private String description;
     private String publishedAt;

@@ -15,9 +15,8 @@ import java.util.ArrayList;
 public class OfflineArticles<T extends Article> implements ShowsMenu {
     public User userObj;
     public ArrayList<T> articleList;
-    public String fileCode;
     public String fileName;
-    public int max_len;
+    public final int MAX_LEN = 15;
     public String title;
 
     /**
@@ -29,10 +28,8 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
     public OfflineArticles(User user, String fileCode, String title) {
         this.title = title;
         userObj = user;
-        this.fileCode = fileCode;
         fileName = "data//" + user.getUsername() + fileCode + ".txt";
         articleList = new ArrayList<>();
-        max_len = 15;
         articleList = (ArrayList<T>) FileHandling.readObjects(articleList, fileName);
     }
 
@@ -64,7 +61,7 @@ public class OfflineArticles<T extends Article> implements ShowsMenu {
      * @param a the object to be added
      */
     public void add(T a) {
-        if (articleList.size() == max_len) {
+        if (articleList.size() == MAX_LEN) {
             articleList.remove(0);
         }
         articleList.add(a);

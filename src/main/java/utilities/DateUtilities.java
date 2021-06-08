@@ -45,7 +45,7 @@ public class DateUtilities {
      * @param date the date to check in string
      * @return true if the date is within last month from today
      */
-    public static boolean isInLastMonth(String date) {
+    public static boolean isInLast30Days(String date) {
         if (!isValidDate(date)) {
             return false;
         }

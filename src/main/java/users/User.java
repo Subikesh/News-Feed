@@ -22,10 +22,8 @@ public class User implements ShowsMenu, Serializable {
     public transient OfflineArticles<News> bookmarkNews;
     public transient OfflineArticles<Source> subscriptions;
 
-    public User() {
-        username = null;
-        password = null;
-    }
+    public User() {}
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -125,7 +123,7 @@ public class User implements ShowsMenu, Serializable {
     public void viewSubNews() {
         System.out.println("Showing top headlines of subscribed sources ");
         String sources = subscriptions.articleList.stream()
-                .map((object) -> object.id)
+                .map((object) -> object.getId())
                 .reduce((prev, curr) -> prev + "," + curr)
                 .orElse(null);
         if (sources == null) {

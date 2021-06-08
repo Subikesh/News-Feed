@@ -16,9 +16,9 @@ import java.io.IOException;
 public class TopNewsQuery extends NewsQuery implements ShowsMenu {
 
     // Managing the pages of API response object
-    int pageNo = 1;
-    final int PAGE_SIZE = 10;
-    int maxPages = 0;
+    private int pageNo = 1;
+    private final int PAGE_SIZE = 10;
+    private int maxPages = 0;
 
     // Contains the list of results fetched currently
     JsonArray resultArray;
