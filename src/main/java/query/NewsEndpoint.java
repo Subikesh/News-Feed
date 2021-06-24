@@ -5,9 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This contains two constants for news filters
+ * This contains three constants for news filters
  * EVERYTHING: used to make news queries with more than one filter
  * TOP-HIGHLIGHTS: used to make simple filter with language, country etc.
+ * SOURCE: used for getting the news-sources list
  */
 public enum NewsEndpoint {
     EVERYTHING("everything", new HashSet<>(
@@ -27,15 +28,5 @@ public enum NewsEndpoint {
     NewsEndpoint(String val, Set<String> parameters) {
         this.value = val;
         this.parameters = parameters;
-    }
-
-    /**
-     * Get next enum constants. Return first element if it goes to end
-     * @return next enum constant
-     */
-    public NewsEndpoint next() {
-        if(ordinal() == values().length -1)
-            return values()[0];
-        return values()[ordinal() + 1];
     }
 }
